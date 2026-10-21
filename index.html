@@ -266,7 +266,7 @@ w.t.forEach(function(tk,j){var c=st.c[j],un=f&&c===undefined;if(f&&c===tk[2])ok+
 h+='<div class="wc'+(un?' un':'')+'">'+tk[1].map(function(o,k){var cl='wo';
 if(f){if(k===tk[2])cl+=(c===k?' ok':' miss');else if(c===k)cl+=' bad'}else if(c===k)cl+=' sel';
 return '<button class="'+cl+'"'+(f?' disabled':' onclick="wp('+i+','+j+','+k+')"')+'>'+esc(o)+'</button>'}).join('')+'</div>'});
-h+='</div><div class="seg">'+(f?'<button class="btn g sm" onclick="wr('+i+')">↺ නැවත උත්සාහ කරන්න</button>':'<button class="btn sm"'+(any?'':' disabled style="opacity:.45"')+' onclick="wf('+i+')">✅ නිමයි</button>'+(any?'':'<small class="sub"> සියලුම වචන තෝරා පසුව එබන්න</small>'))+(w.d.length?'<button class="btn g sm" onclick="wd('+i+')">🔎 පද සාධන'+(ld(key("wd",i))=="1"?' ▲':' ▼')+'</button>':'')+'</div>';
+h+='</div><div class="seg">'+(f?'<button class="btn g sm" onclick="wr('+i+')">↺ නැවත උත්සාහ කරන්න</button>':'<button class="btn sm"'+(any?'':' disabled style="opacity:.45"')+' onclick="wf('+i+')">✅ නිමයි</button>'+(any?'':'<small class="sub"> සියල්ල තෝරා උත්සහ කරන්න</small>'))+(w.d.length?'<button class="btn g sm" onclick="wd('+i+')">🔎 පද සාධන'+(ld(key("wd",i))=="1"?' ▲':' ▼')+'</button>':'')+'</div>';
 if(f)h+='<div class="rs">'+(ok==w.t.length?'🙏 සාධු! සියල්ල නිවැරදියි':'නිවැරදි '+ok+' / '+w.t.length+' · රතු = වැරදි තේරීම, කොළ තිත් ඉරි = නිවැරදි වචනය, තැඹිලි = නොතෝරූ තැන')+'</div><div class="okb"><b>✔ නිවැරදි වාක්‍යය</b><br>'+(TQ.t?pw(w.f):esc(w.f))+'</div>';
 if(ld(key("wd",i))=="1")h+='<div class="dv"><b class="dh">🔎 පද සාධන</b>'+derHtml(w.d)+'</div>';
 return h}
