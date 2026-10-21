@@ -151,6 +151,19 @@ details summary{cursor:pointer;color:var(--acc2)}
 .tree details[open]>summary::before{content:"▾ "}
 .tree a{cursor:pointer;color:var(--acc2)}
 .tree a:hover{text-decoration:underline}
+
+/*resp*/
+main{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+.q,.okb,.rev,.rs{overflow-wrap:anywhere}
+.les,.card{max-width:100%}.les table,.card table{display:block;overflow-x:auto;max-width:100%}
+img{max-width:100%;height:auto}
+.wsc{max-height:82vh;max-height:82dvh}
+@media(min-width:760px){main,.bar-in,#toc{max-width:780px}.q{font-size:1.2rem}.wo{font-size:1rem;padding:4px 12px}}
+@media(min-width:1100px){main,.bar-in,#toc{max-width:920px}.q{font-size:1.28rem}}
+@media(min-width:1500px){main,.bar-in,#toc{max-width:1040px}}
+@media(max-width:400px){main{padding-left:10px;padding-right:10px}.card{padding:12px 10px 12px 16px}.wb{gap:6px}.wc{padding:2px}.wo{padding:5px 8px;font-size:.9rem}.q{font-size:1.02rem}h1{font-size:1.35rem}.seg{gap:6px}}
+@media(pointer:coarse){.wo{min-height:38px}.btn.sm{min-height:38px}}
+@media(max-height:480px) and (orientation:landscape){.wsc{max-height:94vh;max-height:94dvh}}
 </style>
 </head>
 <body>
