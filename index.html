@@ -138,19 +138,6 @@ details summary{cursor:pointer;color:var(--acc2)}
 .sn-b.vy{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 11%,transparent)}.sn-b.vy small{color:var(--acc)}
 .sn-b.ni{border-color:var(--rule);background:color-mix(in srgb,var(--rule) 10%,transparent)}.sn-b.ni small{color:var(--rule)}
 .wmore{display:block;margin:6px auto 0}
-.wtabs{margin:10px 0 4px}
-.dt{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;margin:10px 0;background:var(--bg)}
-.dr{display:grid;grid-template-columns:minmax(74px,.8fr) 1.15fr 1.05fr;border-top:1px solid var(--line)}
-.dr>span{padding:8px 10px;overflow-wrap:anywhere;line-height:1.9}
-.dr:nth-child(even){background:color-mix(in srgb,var(--gold) 6%,transparent)}
-.dr.dh{background:color-mix(in srgb,var(--gold) 16%,var(--card));font-weight:700;border-top:0;color:var(--acc2)}
-.dc small{display:block;color:var(--mut);font-size:.72rem;font-weight:400;line-height:1.3}
-.df{display:inline-block;margin:0 6px 0 0;padding:0 5px;border-radius:6px}
-.df.hit{background:color-mix(in srgb,var(--teal) 28%,transparent);outline:1.5px solid var(--teal);font-weight:700}
-.dc-sm{margin:10px 0 0;padding:8px 12px;border-radius:10px;border:1.5px solid var(--line);background:color-mix(in srgb,var(--gold) 10%,var(--card))}
-.dc-sm small{display:block;color:var(--mut)}
-.dc-hit{margin:10px 0 0;padding:7px 12px;border-radius:10px;font-weight:700;border:1.5px solid var(--teal);background:color-mix(in srgb,var(--teal) 14%,transparent)}
-.dc-hit.no{font-weight:400;border-style:dashed;border-color:var(--line);background:transparent;color:var(--mut)}
 .hint2{color:var(--mut);font-size:.86rem;margin:4px 0 10px}
 .hint2 .pw{pointer-events:none}
 .tree,.tree ul{list-style:none;margin:0;padding:0}
@@ -201,63 +188,6 @@ function sk(t){if(/^ජිනවචන/.test(t))return "jin";if(/^(විසන�
 function pstep(c){var m=c.match(/^(.*)\s*-\s*([^-+➔=]+?)\.?\s*$/);if(!m||!m[1].trim())return null;var t=m[2].trim();if(!SUT.some(function(x){return t.indexOf(x)==0}))return null;return [m[1].trim(),t]}
 function phead(c){return /^[^\s]+ \([^)]*\+[^)]*\)$/.test(c)}
 function pw(t){return String(t).replace(/([඀-෿‍]+)|([^඀-෿‍]+)/g,function(m,a,b){if(b)return esc(b);var k=a.replace(/[‍‌]/g,""),v=TOKMAP[k];return v?'<span class="pw'+(v[1]?'':' st')+'" data-k="'+esc(k)+'" tabindex="0" onclick="ow(this)">'+esc(a)+'</span>':esc(a)})}
-var CASES=[["පඨමා","කර්තෘ"],["දුතියා","කර්ම"],["තතියා","කරණ"],["චතුත්ථී","සම්ප්‍රදාන"],["පඤ්චමී","අපාදාන"],["ඡට්ඨී","සම්බන්ධ"],["සත්තමී","ආධාර"],["ආලපනය","ආමන්ත්‍රණ"]];
-var PAR=(function(){
-function cp(r){return r.map(function(x){return [x[0].slice(),x[1].slice()]})}
-function ov(b,o){var r=cp(b);for(var k in o)r[k]=o[k];return r}
-var P={};
-P.a_m=[[["ො"],["ා"]],[["ං"],["ෙ"]],[["ෙන"],["ෙහි","ෙභි"]],[["ස්ස","ාය"],["ානං"]],[["ස්මා","ම්හා","ා"],["ෙහි","ෙභි"]],[["ස්ස"],["ානං"]],[["ස්මිං","ම්හි","ෙ"],["ෙසු"]],[["","ා"],["ා"]]];
-P.a_n=ov(P.a_m,{0:[["ං"],["ා","ානි"]],1:[["ං"],["ෙ","ානි"]],7:[["","ං"],["ා","ානි"]]});
-P.ā_f=[[["ා"],["ා","ායො"]],[["ං"],["ා","ායො"]],[["ාය"],["ාහි","ාභි"]],[["ාය"],["ානං"]],[["ාය"],["ාහි","ාභි"]],[["ාය"],["ානං"]],[["ාය","ායං"],["ාසු"]],[["ෙ"],["ා","ායො"]]];
-P.i_m=[[["ි"],["ී","යො"]],[["ිං"],["ී","යො"]],[["ිනා"],["ීහි","ීභි"]],[["ිනො","ිස්ස"],["ීනං"]],[["ිස්මා","ිම්හා"],["ීහි","ීභි"]],[["ිනො","ිස්ස"],["ීනං"]],[["ිස්මිං","ිම්හි"],["ීසු"]],[["ි"],["ී","යො"]]];
-P.i_n=ov(P.i_m,{0:[["ි"],["ී","ීනි"]],1:[["ිං"],["ී","ීනි"]],7:[["ි"],["ී","ීනි"]]});
-P.i_f=[[["ි"],["ී","ියො"]],[["ිං"],["ී","ියො"]],[["ියා"],["ීහි","ීභි"]],[["ියා"],["ීනං"]],[["ියා"],["ීහි","ීභි"]],[["ියා"],["ීනං"]],[["ියා","ියං"],["ීසු"]],[["ි"],["ී","ියො"]]];
-P.ī_m=[[["ී"],["ී","ිනො"]],[["ිං"],["ී","ිනො"]],[["ිනා"],["ීහි","ීභි"]],[["ිනො","ිස්ස"],["ීනං"]],[["ිම්හා","ිස්මා"],["ීහි","ීභි"]],[["ිනො","ිස්ස"],["ීනං"]],[["ිම්හි","ිස්මිං"],["ීසු"]],[["ි","ී"],["ී","ිනො"]]];
-P.ī_f=[[["ී"],["ී","ියො"]],[["ිං"],["ී","ියො"]],[["ියා"],["ීහි","ීභි"]],[["ියා"],["ීනං"]],[["ියා"],["ීහි","ීභි"]],[["ියා"],["ීනං"]],[["ියා","ියං"],["ීසු"]],[["ි","ී"],["ී","ියො"]]];
-P.u_m=[[["ු"],["ූ","වො"]],[["ුං"],["ූ","වො"]],[["ුනා"],["ූහි","ූභි"]],[["ුනො","ුස්ස"],["ූනං"]],[["ුම්හා","ුස්මා"],["ූහි","ූභි"]],[["ුනො","ුස්ස"],["ූනං"]],[["ුම්හි","ුස්මිං"],["ූසු"]],[["ු"],["ූ","වො"]]];
-P.u_n=ov(P.u_m,{0:[["ු"],["ූ","ූනි"]],1:[["ුං"],["ූ","ූනි"]],7:[["ු"],["ූ","ූනි"]]});
-P.u_f=[[["ු"],["ූ","ුයො"]],[["ුං"],["ූ","ුයො"]],[["ුයා"],["ූහි","ූභි"]],[["ුයා"],["ූනං"]],[["ුයා"],["ූහි","ූභි"]],[["ුයා"],["ූනං"]],[["ුයා","ුයං"],["ූසු"]],[["ු"],["ූ","ුයො"]]];
-P.ū_m=ov(P.u_m,{0:[["ූ"],["ූ","ුවො"]],1:[["ුං"],["ූ","ුවො"]],7:[["ූ","ු"],["ූ","ුවො"]]});
-P.ū_f=ov(P.u_f,{0:[["ූ"],["ූ","ුයො"]],7:[["ු","ූ"],["ූ","ුයො"]]});
-return P})();
-var GL={m:"පුල්ලිඞ්ග",f:"ඉත්ථිලිඞ්ග",n:"නපුංසකලිඞ්ග"};
-function stemInfo(st){st=zs(st);var a=Array.from(st),l=a[a.length-1],M={"ා":"ā","ි":"i","ී":"ī","ු":"u","ූ":"ū"};
-if(M[l])return {core:a.slice(0,-1).join(""),v:M[l]};
-if(/[ක-ෆ]/.test(l))return {core:st,v:"a"};return null}
-function sgen(s){s=(s||"").trim();
-if(/^(නාම\s*\()?පු(\s|\)|\.|$)/.test(s))return "m";
-if(/^(නාම\s*\()?ඉ(\s|\)|\.|$)/.test(s))return "f";
-if(/^(නාම\s*\()?න(\s|\)|\.|$)/.test(s))return "n";
-if(/^විශේ/.test(s))return "adj";return null}
-function decl(stem,ss){var si=stemInfo(stem);if(!si)return [];var G={},ord=[];
-function add(g,m){if(!G[g]){G[g]=[];ord.push(g)}if(m&&G[g].indexOf(m)<0&&G[g].length<5)G[g].push(m)}
-ss.forEach(function(r){var g=sgen(r[1]);if(!g)return;
-if(g=="adj"){var l=si.v=="a"?["m","n","f"]:si.v=="ī"?["m"]:["m","n"];l.forEach(function(x){add(x,r[3])})}else add(g,r[3])});
-var out=[];["m","f","n"].forEach(function(g){if(!G[g])return;
-var key=(si.v=="a"&&g=="f")?"ā_f":si.v+"_"+g,p=PAR[key];if(!p)return;
-out.push({stem:stem,g:g,label:GL[g],ms:G[g],rows:p,core:si.core})});return out}
-function dhits(d,k){var o=[];d.rows.forEach(function(r,ci){for(var n=0;n<2;n++)r[n].forEach(function(e){if(zs(d.core+e)==k)o.push(CASES[ci][0]+" "+(n?"බහුවචන":"ඒකවචන"))})});return o}
-function decl2(stem,k){var seen={},res=[];
-function go(s,pri){if(seen[s])return;seen[s]=1;decl(s,DICT[s]||[]).forEach(function(d){d.hit=dhits(d,k);d.pri=pri;res.push(d)})}
-go(stem,1);
-var kz=zs(k);Object.keys(DICT).forEach(function(s){if(seen[s])return;var z=zs(s);if(z.length<2||kz.length-z.length>6||kz.indexOf(Array.from(z).slice(0,-1).join(""))!=0)return;go(s,2)});
-var multi=res.some(function(d){return d.stem!=stem});
-res=res.filter(function(d){return d.stem==stem||d.hit.length});
-res.forEach(function(d){d.tag=(res.some(function(x){return x.stem!=d.stem})?d.stem+" · ":"")+d.label});
-res.sort(function(a,b){return (b.hit.length>0)-(a.hit.length>0)||a.pri-b.pri});return res}
-function declH(D,k,t,exact){if(WGI<0||WGI>=D.length)WGI=0;var d=D[WGI],h='<div class="dcl">';
-if(D.length>1){h+='<div class="seg wtabs">';D.forEach(function(x,i){h+='<button class="btn sm'+(x==d?'':' g')+'" onclick="wg('+i+')">'+esc(x.tag)+'</button>'});h+='</div>'}
-if(d.ms.length)h+='<div class="dc-sm"><small>🪷 සිංහල තේරුම</small>'+esc(d.ms.join("; "))+'</div>';
-var body='<div class="dt"><div class="dr dh"><span>විභක්තිය</span><span>ඒකවචන</span><span>බහුවචන</span></div>';
-d.rows.forEach(function(r,ci){body+='<div class="dr"><span class="dc"><b>'+CASES[ci][0]+'</b><small>'+CASES[ci][1]+'</small></span>';
-for(var n=0;n<2;n++){body+='<span>'+r[n].map(function(e){var f=d.core+e,m=zs(f)==k;return '<span class="df'+(m?' hit':'')+'">'+esc(f)+'</span>'}).join(" ")+'</span>'}
-body+='</div>'});body+='</div>';
-if(d.hit.length)h+='<div class="dc-hit">✔ “'+esc(t)+'” = '+esc(d.hit.join(" / "))+'</div>';
-else if(!exact)h+='<div class="dc-hit no">“'+esc(t)+'” මෙම වගුවේ සම්මත රූප අතර නැත (සමාසයක් හෝ වෙනත් රූපයක් විය හැක).</div>';
-return h+body+'<p class="hint2">වරනැගීම සකසා ඇත්තේ ශබ්දකෝෂයේ ඇති මූල පදය (<b>'+esc(d.stem)+'</b>) හා එහි ලිංගය අනුව සම්මත අවසාන රූප යොදා ය.</p></div>'}
-var WV=0,WGI=0;
-function wv(n){WV=n;WGI=-1;wsr()}
-function wg(i){WGI=i;wsr()}
 var WK=null,WN=4;
 function ghue(g){var h=0;for(var i=0;i<g.length;i++)h=(h*31+g.charCodeAt(i))%6;return h}
 function senseH(r,i){var m=r[0].match(/(\d+(?:\.\d+)?)\s*$/),gr=(r[1]||"").trim();
@@ -270,16 +200,11 @@ if(r[6])h+='<div class="sn-b ni"><small>නිරුක්තිය</small>'+esc
 return h+'</div>'}
 function wsr(){var v=TOKMAP[WK.k],ss=DICT[v[0]]||[],base=(ss[0]?ss[0][0]:v[0]).replace(/\s+\d+(\.\d+)?\s*$/,"");
 var h='<div class="wsh"><div class="wi"><div class="wt">'+esc(WK.t)+'</div>'+(v[1]?'<span class="wmt ex">✔ ශබ්දකෝෂයේ ඇති පදය</span>':'<span class="wmt nx">≈ පද මූලය: '+esc(base)+'</span>')+'</div><button class="wx" onclick="cw()" aria-label="වසන්න">✕</button></div>';
-var D=decl2(v[0],WK.k);
-if(D.length)h+='<div class="seg wtabs"><button class="btn sm'+(WV?' g':'')+'" onclick="wv(0)">🪷 තේරුම හා විස්තර</button><button class="btn sm'+(WV?'':' g')+'" onclick="wv(1)">📊 වරනැගීම</button></div>';
-if(WV&&D.length)h+=declH(D,WK.k,WK.t,v[1]);
-else{
 if(!v[1])h+='<p class="hint2">මෙය විභක්ති / ප්‍රත්‍ය සහිත රූපයකි. ශබ්දකෝෂයේ ඇති මූල පදයේ තේරුම් පහත පෙන්වයි.</p>';
 ss.slice(0,WN).forEach(function(r,i){h+=senseH(r,i)});
 if(ss.length>WN)h+='<button class="btn g sm wmore" onclick="wmore()">තව අර්ථ '+(ss.length-WN)+' ක් පෙන්වන්න ▼</button>';
-}
 document.getElementById("wsc").innerHTML=h}
-function ow(el){var k=el.getAttribute("data-k");if(!TOKMAP[k])return;WK={k:k,t:el.textContent};WN=4;WV=0;WGI=-1;wsr();var w=document.getElementById("ws");w.hidden=false;document.getElementById("wsc").scrollTop=0}
+function ow(el){var k=el.getAttribute("data-k");if(!TOKMAP[k])return;WK={k:k,t:el.textContent};WN=4;wsr();var w=document.getElementById("ws");w.hidden=false;document.getElementById("wsc").scrollTop=0}
 function wmore(){WN=99;wsr()}
 function cw(){document.getElementById("ws").hidden=true}
 document.addEventListener("keydown",function(e){if(e.key=="Escape")cw();if((e.key=="Enter"||e.key==" ")&&e.target&&e.target.classList&&e.target.classList.contains("pw")){e.preventDefault();ow(e.target)}});
