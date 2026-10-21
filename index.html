@@ -185,7 +185,7 @@ function stem(w,n){return Array.from(zs(w)).slice(0,n).join("")}
 function key(k,i){return "pali_"+k+"_"+TQ.e+"_"+TQ.t+"_"+i}
 function ttl(t){document.getElementById("ttl").textContent=t}
 function hints(i){var x=TR[TQ.e],s=(TQ.t?x.s:x.p)[i],g=TQ.t?x.gs:x.gp,n=TQ.t?3:4;s=zs(s);return g.filter(function(e){return s.indexOf(stem(e[0],n))>=0})}
-function exCards(){return TR.map(function(x,i){return '<div class="exc"><span class="ic">'+(i+1)+'</span><span class="tx"><b>අභ්‍යාසය '+(i+1)+'</b><small>'+esc(x.lt)+' · වාක්‍ය '+(x.p.length+x.s.length)+'</small></span><span class="bt"><button class="btn g sm" onclick="les('+i+')">📖 පාඩම</button><button class="btn sm" onclick="openEx('+i+')">'+PEN+' අභ්‍යාසය</button></span></div>'}).join('')}
+function exCards(){return TR.map(function(x,i){return '<div class="exc"><span class="ic">'+(i+1)+'</span><span class="tx"><b>අභ්‍යාසය '+(i+1)+'</b></span><span class="bt"><button class="btn g sm" onclick="les('+i+')">📖 පාඩම</button><button class="btn sm" onclick="openEx('+i+')">'+PEN+' අභ්‍යාසය</button></span></div>'}).join('')}
 function home(){
 if(!document.getElementById("toc").hidden)tt();
 ttl("");
