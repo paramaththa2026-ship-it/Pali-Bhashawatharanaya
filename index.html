@@ -260,20 +260,20 @@ fl();return out}
 function wget(i){try{var v=JSON.parse(ld(key("wc",i)));if(v&&v.c){for(var q=0;q<v.c.length;q++)if(v.c[q]===null)v.c[q]=undefined;return v}}catch(e){}return{c:[],f:0}}
 function wset(i,v){sv(key("wc",i),JSON.stringify(v))}
 function WL(){return TR[TQ.e].w[TQ.t?"s":"p"]}
-function wcard(i){var w=WL()[i],st=wget(i),f=st.f,ok=0,S=TQ.t?TR[TQ.e].s:TR[TQ.e].p;
+function wcard(i){var w=WL()[i],st=wget(i),f=st.f,ok=0,any=st.c.some(function(v){return v!==undefined&&v!==null}),S=TQ.t?TR[TQ.e].s:TR[TQ.e].p;
 var h='<span class="tag">වාක්‍යය '+(i+1)+'</span><p class="q">'+(TQ.t?esc(S[i]):pw(S[i]))+'</p><p class="hl">'+(TQ.t?'නිවැරදි පාලි වචනය තෝරන්න':'නිවැරදි සිංහල වචනය තෝරන්න')+'</p><div class="wb">';
 w.t.forEach(function(tk,j){var c=st.c[j],un=f&&c===undefined;if(f&&c===tk[2])ok++;
 h+='<div class="wc'+(un?' un':'')+'">'+tk[1].map(function(o,k){var cl='wo';
 if(f){if(k===tk[2])cl+=(c===k?' ok':' miss');else if(c===k)cl+=' bad'}else if(c===k)cl+=' sel';
 return '<button class="'+cl+'"'+(f?' disabled':' onclick="wp('+i+','+j+','+k+')"')+'>'+esc(o)+'</button>'}).join('')+'</div>'});
-h+='</div><div class="seg">'+(f?'<button class="btn g sm" onclick="wr('+i+')">↺ නැවත උත්සාහ කරන්න</button>':'<button class="btn sm" onclick="wf('+i+')">✅ නිමයි</button>')+(w.d.length?'<button class="btn g sm" onclick="wd('+i+')">🔎 පද සාධන'+(ld(key("wd",i))=="1"?' ▲':' ▼')+'</button>':'')+'</div>';
+h+='</div><div class="seg">'+(f?'<button class="btn g sm" onclick="wr('+i+')">↺ නැවත උත්සාහ කරන්න</button>':'<button class="btn sm"'+(any?'':' disabled style="opacity:.45"')+' onclick="wf('+i+')">✅ නිමයි</button>'+(any?'':'<small class="sub"> වචන කිහිපයක් තෝරා පසුව එබන්න</small>'))+(w.d.length?'<button class="btn g sm" onclick="wd('+i+')">🔎 පද සාධන'+(ld(key("wd",i))=="1"?' ▲':' ▼')+'</button>':'')+'</div>';
 if(f)h+='<div class="rs">'+(ok==w.t.length?'🙏 සාධු! සියල්ල නිවැරදියි':'නිවැරදි '+ok+' / '+w.t.length+' · රතු = වැරදි තේරීම, කොළ තිත් ඉරි = නිවැරදි වචනය, තැඹිලි = නොතෝරූ තැන')+'</div><div class="okb"><b>✔ නිවැරදි වාක්‍යය</b><br>'+(TQ.t?pw(w.f):esc(w.f))+'</div>';
 if(ld(key("wd",i))=="1")h+='<div class="dv"><b class="dh">🔎 පද සාධන</b>'+derHtml(w.d)+'</div>';
 return h}
 function wcards(S){return S.map(function(_,i){return '<div class="card" id="sc'+i+'">'+wcard(i)+'</div>'}).join("")+'<p class="sub" style="margin-top:14px">වචන තෝරා “නිමයි” බොත්තම එබූ විට නිවැරදි වාක්‍යය පෙන්වයි.</p>'}
 function wrd(i){document.getElementById("sc"+i).innerHTML=wcard(i);var S=WL(),d=S.filter(function(_,j){return wget(j).f}).length;document.getElementById("dc").textContent="🙏 "+d+"/"+S.length}
 function wp(i,j,k){var s=wget(i);if(s.f)return;s.c[j]=k;wset(i,s);wrd(i)}
-function wf(i){var s=wget(i);s.f=1;wset(i,s);wrd(i)}
+function wf(i){var s=wget(i);if(!s.c.some(function(v){return v!==undefined&&v!==null}))return;s.f=1;wset(i,s);wrd(i)}
 function wr(i){wset(i,{c:[],f:0});wrd(i)}
 function wd(i){var k=key("wd",i);sv(k,ld(k)=="1"?"0":"1");wrd(i)}
 function les(i){TQ.e=i;var x=TR[i];ttl("පාඩම "+(i+1)+" / "+TR.length);
