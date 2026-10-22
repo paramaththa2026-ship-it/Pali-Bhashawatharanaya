@@ -339,11 +339,14 @@ function nrt(i){sv(key("nw",i),"");NSU[i]={};nrd(i)}
 function nsd(i){var u=NSU[i]=NSU[i]||{};u.sd=!u.sd;u.vs=0;nrd(i)}
 function nvs(i){var u=NSU[i]=NSU[i]||{};u.vs=!u.vs;u.sd=0;nrd(i)}
 function nst(i,t){var u=NSU[i]=NSU[i]||{};u.t=t;u.sd=1;nrd(i)}
+function sgm(g){var c=g[1],t=esc(g[0]);if(c=="x")return "<s>"+t+"</s>";if(c=="v")return '<span class="v">'+t+'</span>';if(c=="p")return '<span class="pl">'+t+'</span>';return t}
+function srow(t,n){return '<div class="st"><span class="ex">'+t.map(sgm).join('')+'</span><span class="ch c-'+sk(n)+'">'+esc(n)+'</span></div>'}
 function sdHtml(i){var d=NW[i],u=NSU[i]||{},t=u.t||0,x=d.sd[t];
-var h='<div class="sdp"><div class="sdt">'+d.sd.map(function(z,k){return '<button class="'+(k==t?'on':'')+'" onclick="nst('+i+','+k+')">සන්ධි '+(k+1)+'</button>'}).join('')+'</div>';
-h+='<div class="sdh"><span class="cs a">'+esc(x.a)+'</span> <span class="cs p">+</span> <span class="cs b">'+esc(x.b)+'</span> <span class="cs p">➔</span> <span class="cs r">'+esc(x.r)+'</span></div><ol class="sdl">';
-x.steps.forEach(function(s,k){h+='<li><span class="nn">'+(k+1)+'</span><div class="sx">'+s.t.map(function(g){return '<span class="cs '+g[1]+'">'+esc(g[0])+'</span>'}).join('')+'</div><span class="ru">'+esc(s.n)+'</span><span class="gl">'+esc(s.g)+'</span></li>'});
-return h+'</ol></div>'}
+var h='<div class="sdp">';
+if(d.sd.length>1)h+='<div class="sdt">'+d.sd.map(function(z,k){return '<button class="'+(k==t?'on':'')+'" onclick="nst('+i+','+k+')">සන්ධි '+(k+1)+' · '+esc(z.a)+' + '+esc(z.b)+'</button>'}).join('')+'</div>';
+h+='<div class="blk" style="margin:4px 0 0">'+srow([[x.r,"r"]],"ජිනවචනයුත්තඤ්හි");
+x.steps.forEach(function(s){h+=srow(s.t,s.n)});
+return h+'</div></div>'}
 function ncard(i){var d=NW[i],v=nget(i),u=NSU[i]||{},done=v.c>=0,L=["අ","ආ","ඉ"];
 var h='<span class="tag">වාක්‍යය '+(i+1)+'</span><p class="q">'+pw(TR[0].p[i])+'</p>';
 h+='<p class="hl">🎯 නිවැරදි සිංහල පරිවර්තනය තෝරන්න</p><div class="nq">';
