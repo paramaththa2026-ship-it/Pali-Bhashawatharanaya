@@ -401,7 +401,7 @@ var d=L.filter(function(_,i){return m==1?wget(i).f:(NWD(i)?nget(i).c>=0:ld(key("
 var h='<div class="top"><button class="btn g sm" onclick="les(TQ.e)">📖 පාඩම</button><span id="dc">🙏 '+d+'/'+L.length+'</span></div><h1>'+PEN+' අභ්‍යාසය '+(TQ.e+1)+' – වාක්‍ය පරිවර්තන</h1>'
 +'<div class="seg">'+TR.map(function(_,i){return '<button class="btn sm'+(TQ.e==i?'':' g')+'" onclick="tabE('+i+')">'+(i+1)+'</button>'}).join('')+'</div>'
 +'<p class="hint2">💡 පාලි වචන එබූ විට ශබ්දකෝෂයෙන් එහි තේරුම පෙනේ.</p><div class="seg"><button class="btn sm'+(p?' g':'')+'" onclick="tabT(0)">සිංහලට නැඟිය යුතු ('+x.p.length+')</button><button class="btn sm'+(p?'':' g')+'" onclick="tabT(1)">පාලියට නැඟිය යුතු ('+x.s.length+')</button></div>'
-+'<div class="seg">'+["📝 වාක්‍ය","🔤 වචන තේරීම","🗂 වචන කාඩ්පත්","📚 අමුතු වචන"].map(function(t,i){return '<button class="btn sm'+(m==i?'':' g')+'" onclick="tabM('+i+')">'+t+'</button>'}).join('')+'</div>';
++'<div class="seg">'+["📝 වාක්‍ය","","🗂 වචන කාඩ්පත්","📚 අමුතු වචන"].map(function(t,i){return i==1?'':'<button class="btn sm'+(m==i?'':' g')+'" onclick="tabM('+i+')">'+t+'</button>'}).join('')+'</div>';
 if(m==1){h+=wcards(L)}
 else if(m==0){
 L.forEach(function(s,i){if(NWD(i)){h+='<div class="card" id="nc'+i+'">'+ncard(i)+'</div>';return}var k=key("tra",i),dk=key("trd",i),on=ld(dk)=="1",hs=hints(i);
@@ -410,7 +410,7 @@ h+='<div class="card"><span class="tag">වාක්‍යය '+(i+1)+'</span><p
 +'<textarea rows="3" data-k="'+k+'" oninput="sv(this.dataset.k,this.value)" placeholder="මෙහි ඔබේ පරිවර්තනය ලියන්න…">'+esc(ld(k))+'</textarea>'
 +'<details class="ans"><summary>✅ පිළිතුර බලන්න</summary><div class="okb">'+(p?pw(x.w.s[i].f):esc(x.w.p[i].f))+'</div></details>'
 +'<p><button class="btn sm'+(on?'':' g')+'" onclick="dn('+i+')">'+(on?'🙏 ඉගෙන ගත්තා ✓':'🙏 ඉගෙන ගත්තා ලෙස සලකුණු කරන්න')+'</button></p></div>'});
-h+='<p class="sub" style="margin-top:14px">“පිළිතුර බලන්න” මගින් පොතේ පරිවර්තනය දැකිය හැක; “🔤 වචන තේරීම” මගින් වචන තෝරා පුහුණු විය හැක.</p>'}
+h+='<p class="sub" style="margin-top:14px">“පිළිතුර බලන්න” මගින් පොතේ පරිවර්තනය දැකිය හැක.</p>'}
 else if(!G.length){h+='<p class="sub">මෙම කොටසට වචන ලැයිස්තුවක් නැත.</p>'}
 else if(m==2){var e=G[TQ.f%G.length];
 h+='<div class="card fc" onclick="flip()"><div><small>'+(TQ.fl?(p?"පාලි":"සිංහල"):(p?"සිංහල":"පාලි"))+'</small><br>'+esc(TQ.fl?e[1]:e[0])+'</div></div><p style="text-align:center"><button class="btn g sm" onclick="nx(-1)">◀</button> <span>'+(TQ.f+1)+' / '+G.length+'</span> <button class="btn g sm" onclick="nx(1)">▶</button></p><p class="sub" style="text-align:center">කාඩ්පත තට්ටු කර පෙරළන්න</p>'}
