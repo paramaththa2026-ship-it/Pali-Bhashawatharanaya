@@ -1646,6 +1646,7 @@ h4.group{border-bottom:1px dashed var(--line);padding-bottom:6px}
 
 <script>(function(){var q=document.getElementById('wq'),n=document.getElementById('wqn');if(!q)return;var cs=[].slice.call(document.querySelectorAll('figure.card'));
 q.addEventListener('input',function(){var v=q.value.trim(),c=0;cs.forEach(function(f){var t=f.textContent;var h=!v||t.indexOf(v)>-1;f.classList.toggle('hid',!h);if(h&&v)c++});n.textContent=v?(c?c+' වරනැගීම් ක්‍රම හමුවිය':'කිසිවක් හමු නොවීය'):'';if(v){var f=cs.filter(function(x){return!x.classList.contains('hid')})[0];if(f)f.scrollIntoView({block:'center'})}})})();
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;e.preventDefault();var id=decodeURIComponent(a.getAttribute('href').slice(1)),el=id&&document.getElementById(id);if(el){el.scrollIntoView({behavior:'smooth',block:'start'});try{history.replaceState(null,'','#'+id)}catch(x){}}else window.scrollTo(0,0)});
 window.addEventListener('message',function(e){if(e.data&&e.data.th)document.documentElement.setAttribute('data-theme',e.data.th)});</script>
 </body></html></template>
 <script>
