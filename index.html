@@ -438,9 +438,9 @@ if(d.sd.length>1)h+='<div class="sdt">'+d.sd.map(function(z,k){return '<button c
 h+='<div class="blk" style="margin:4px 0 0">'+srow([[x.r,"r"]],"ජිනවචනයුත්තඤ්හි");
 x.steps.forEach(function(s){h+=srow(s.t,s.n)});
 return h+'</div></div>'}
-function ncard(i){var d=NW[i],u=NSU[i]||{},k=key("tra",i),on=ld(key("trd",i))=="1",n=wcnt(ld(k)),ok=n>=tneed(i);
+function ncard(i){var d=NW[i],u=NSU[i]||{},k=key("tra",i),on=ld(key("trd",i))=="1",n=wm(i,ld(k)),ok=n>=tneed(i);
 var h='<span class="tag">වාක්‍යය '+(i+1)+'</span><p class="q">'+pw(TR[0].p[i])+'</p>'
-+'<div id="wp'+i+'">'+tbox(i,n)+'</div>'
++'<div id="wp'+i+'">'+tbox(i,n,wcnt(ld(k)))+'</div>'
 +'<textarea rows="3" data-k="'+k+'" data-i="'+i+'" oninput="tin(this)"'+(on?' readonly':'')+' placeholder="මෙහි ඔබේ පරිවර්තනය ලියන්න…">'+esc(ld(k))+'</textarea>';
 if(on){
 h+='<div class="nv"><h5>🔗 පද අන්වය</h5><div class="an">'+pw(d.an)+'</div><h5>✔ නිවැරදි පිළිතුර</h5><div class="ca">'+esc(d.o[0])+'</div>';
@@ -448,7 +448,7 @@ h+='<div class="nbt"><button class="btn sm'+(u.sd?' on':' g')+'" onclick="nsd('+
 if(u.sd)h+=sdHtml(i);
 if(u.vs&&d.vis)h+='<div class="vsp"><h6>📖 විස්තරය</h6>'+d.vis+'</div>';
 h+='</div>'}
-else h+='<p><button class="btn sm" id="wb'+i+'" onclick="tdone('+i+')"'+(ok?'':' disabled')+'>✅ පිළිතුරු දී අවසන්</button><span class="hint2" id="wh'+i+'" style="display:block;margin-top:6px">'+(ok?'':'වචන '+tneed(i)+' ක් (75%) ලියූ පසු විවෘත වේ')+'</span></p><p class="nlg">පිළිතුරු දී අවසන් පසු පද අන්වය, නිවැරදි පිළිතුර, සන්ධි සහ විස්තරය පෙනේ.</p>';
+else h+='<p><button class="btn sm" id="wb'+i+'" onclick="tdone('+i+')"'+(ok?'':' disabled')+'>✅ පිළිතුරු දී අවසන්</button><span class="hint2" id="wh'+i+'" style="display:block;margin-top:6px">'+(ok?'':'පිළිතුරට අදාළ වචන 75% ක් ලියූ පසු විවෘත වේ')+'</span></p><p class="nlg">පිළිතුරු දී අවසන් පසු පද අන්වය, නිවැරදි පිළිතුර, සන්ධි සහ විස්තරය පෙනේ.</p>';
 return h}
 function nrt(i){tretry(i)}
 function wget(i){try{var v=JSON.parse(ld(key("wc",i)));if(v&&v.c){for(var q=0;q<v.c.length;q++)if(v.c[q]===null)v.c[q]=undefined;return v}}catch(e){}return{c:[],f:0}}
@@ -481,23 +481,31 @@ function openEx(i){TQ.e=i;TQ.t=0;TQ.m=dm(i);TQ.f=0;TQ.fl=0;tr();window.scrollTo(
 function tabE(e){TQ.e=e;TQ.m=dm(e);TQ.f=0;TQ.fl=0;tr()}
 function tabT(t){TQ.t=t;TQ.f=0;TQ.fl=0;tr()}
 function tabM(m){TQ.m=m;tr()}
+function wnorm(w){return Array.from(String(w).replace(/[‍‌]/g,"").replace(/[^඀-෿A-Za-z0-9]/g,""))}
+function wsim(a,b){if(!a.length||!b.length)return 0;if(a.length<=2||b.length<=2)return a.join("")==b.join("")?1:0;
+var m=Math.max(a.length,b.length),pf=0;while(pf<a.length&&pf<b.length&&a[pf]==b[pf])pf++;var pr=pf>=3?pf/m:0;
+function bg(x){var o={},c=0;for(var i=0;i<x.length-1;i++){var k=x[i]+x[i+1];o[k]=(o[k]||0)+1;c++}return [o,c]}
+var A=bg(a),B=bg(b),cm=0;for(var k in A[0])if(B[0][k])cm+=Math.min(A[0][k],B[0][k]);var dc=(A[1]+B[1])?2*cm/(A[1]+B[1]):0;return Math.max(pr,dc)}
+function tans(i){var x=TR[TQ.e];return NWD(i)?NW[i].o[0]:(TQ.t?x.w.s[i].f:x.w.p[i].f)}
+function wm(i,text){var T=String(tans(i)).split(/\s+/).map(wnorm).filter(function(w){return w.length}),U=String(text).split(/\s+/).map(wnorm).filter(function(w){return w.length>=2}),used={},c=0;
+U.forEach(function(u){var bi=-1,bs=0.5;T.forEach(function(t,j){if(used[j])return;var v=wsim(u,t);if(v>=bs){bs=v;bi=j}});if(bi>=0){used[bi]=1;c++}});return Math.min(c,T.length)}
 function wcnt(t){return String(t).split(/\s+/).filter(function(w){return w.replace(/[^඀-෿A-Za-z0-9]/g,"").length}).length}
 function tgt(i){var x=TR[TQ.e];return Math.max(1,wcnt(NWD(i)?NW[i].o[0]:(TQ.t?x.w.s[i].f:x.w.p[i].f)))}
 function tneed(i){return Math.ceil(tgt(i)*0.75)}
 function tpct(i,n){return Math.min(100,Math.round(n/tgt(i)*100))}
-function tbox(i,n){var g=tgt(i),pc=tpct(i,n),ok=n>=tneed(i);return '<div class="wcp'+(ok?' ok':'')+'"><div class="wct"><span>✍️ ලියූ වචන <b>'+n+'</b> / '+g+'</span><b class="wcn">'+pc+'%</b></div><div class="wcb"><i style="width:'+pc+'%"></i><u style="left:75%"></u></div></div>'}
-function trc(i){var p=TQ.t,x=TR[TQ.e],s=(p?x.s:x.p)[i],k=key("tra",i),dk=key("trd",i),on=ld(dk)=="1",hs=hints(i),n=wcnt(ld(k)),ok=n>=tneed(i);
+function tbox(i,n,t){var pc=tpct(i,n),ok=n>=tneed(i);return '<div class="wcp'+(ok?' ok':'')+'"><div class="wct"><span>✍️ ලියූ වචන <b>'+t+'</b> · පිළිතුරට අදාළ බව</span><b class="wcn">'+pc+'%</b></div><div class="wcb"><i style="width:'+pc+'%"></i><u style="left:75%"></u></div></div>'}
+function trc(i){var p=TQ.t,x=TR[TQ.e],s=(p?x.s:x.p)[i],k=key("tra",i),dk=key("trd",i),on=ld(dk)=="1",hs=hints(i),n=wm(i,ld(k)),ok=n>=tneed(i);
 var h='<span class="tag">වාක්‍යය '+(i+1)+'</span><p class="q">'+(p?esc(s):pw(s))+'</p>'
 +(hs.length?'<details><summary>💡 ඉඟි වචන ('+hs.length+')</summary>'+hs.map(function(e){return '<div class="rev"><b>'+esc(e[0])+'</b> = '+esc(e[1])+'</div>'}).join('')+'</details>':'')
-+'<div id="wp'+i+'">'+tbox(i,n)+'</div>'
++'<div id="wp'+i+'">'+tbox(i,n,wcnt(ld(k)))+'</div>'
 +'<textarea rows="3" data-k="'+k+'" data-i="'+i+'" oninput="tin(this)"'+(on?' readonly':'')+' placeholder="මෙහි ඔබේ පරිවර්තනය ලියන්න…">'+esc(ld(k))+'</textarea>';
 if(on)h+='<div class="okb"><small>✅ නිවැරදි පිළිතුර</small>'+(p?pw(x.w.s[i].f):esc(x.w.p[i].f))+'</div><p><button class="btn g sm" onclick="tretry('+i+')">↺ නැවත උත්සාහ කරන්න</button></p>';
-else h+='<p><button class="btn sm" id="wb'+i+'" onclick="tdone('+i+')"'+(ok?'':' disabled')+'>✅ පිළිතුරු දී අවසන්</button><span class="hint2" id="wh'+i+'" style="display:block;margin-top:6px">'+(ok?'':'වචන '+tneed(i)+' ක් (75%) ලියූ පසු විවෘත වේ')+'</span></p>';
+else h+='<p><button class="btn sm" id="wb'+i+'" onclick="tdone('+i+')"'+(ok?'':' disabled')+'>✅ පිළිතුරු දී අවසන්</button><span class="hint2" id="wh'+i+'" style="display:block;margin-top:6px">'+(ok?'':'පිළිතුරට අදාළ වචන 75% ක් ලියූ පසු විවෘත වේ')+'</span></p>';
 return h}
-function tin(el){var i=+el.getAttribute("data-i");sv(el.getAttribute("data-k"),el.value);var n=wcnt(el.value),ok=n>=tneed(i);document.getElementById("wp"+i).innerHTML=tbox(i,n);var b=document.getElementById("wb"+i),w=document.getElementById("wh"+i);if(b)b.disabled=!ok;if(w)w.textContent=ok?"":'වචන '+tneed(i)+' ක් (75%) ලියූ පසු විවෘත වේ'}
+function tin(el){var i=+el.getAttribute("data-i");sv(el.getAttribute("data-k"),el.value);var n=wm(i,el.value),ok=n>=tneed(i);document.getElementById("wp"+i).innerHTML=tbox(i,n,wcnt(el.value));var b=document.getElementById("wb"+i),w=document.getElementById("wh"+i);if(b)b.disabled=!ok;if(w)w.textContent=ok?"":'පිළිතුරට අදාළ වචන 75% ක් ලියූ පසු විවෘත වේ'}
 function tcnt(){var L=(TQ.t?TR[TQ.e].s:TR[TQ.e].p),d=L.filter(function(_,i){return ld(key("trd",i))=="1"}).length,e=document.getElementById("dc");if(e)e.textContent="🙏 "+d+"/"+L.length}
 function cH(i){return NWD(i)?ncard(i):trc(i)}function cE(i){return document.getElementById(NWD(i)?"nc"+i:"tc"+i)}
-function tdone(i){if(wcnt(ld(key("tra",i)))<tneed(i))return;sv(key("trd",i),"1");cE(i).innerHTML=cH(i);tcnt()}
+function tdone(i){if(wm(i,ld(key("tra",i)))<tneed(i))return;sv(key("trd",i),"1");cE(i).innerHTML=cH(i);tcnt()}
 function tretry(i){sv(key("trd",i),"0");sv(key("tra",i),"");NSU[i]={};cE(i).innerHTML=cH(i);tcnt()}
 function dn(i){var k=key("trd",i);sv(k,ld(k)=="1"?"0":"1");tr()}
 function flip(){TQ.fl=!TQ.fl;tr()}
@@ -512,7 +520,7 @@ var h='<div class="top"><button class="btn g sm" onclick="les(TQ.e)">📖 පා
 if(m==1){h+=wcards(L)}
 else if(m==0){
 L.forEach(function(s,i){if(NWD(i)){h+='<div class="card" id="nc'+i+'">'+ncard(i)+'</div>';return}h+='<div class="card" id="tc'+i+'">'+trc(i)+'</div>'});
-h+='<p class="sub" style="margin-top:14px">පිළිතුරේ වචන 75% ක් ලියූ පසු “පිළිතුරු දී අවසන්” බොත්තම විවෘත වේ; එවිට නිවැරදි පිළිතුර පෙනේ. ලියන පිළිතුර පොතේ පිළිතුරට සර්වසම විය යුතු නැත.</p>'}
+h+='<p class="sub" style="margin-top:14px">පිළිතුරට සැබැවින් අදාළ වචන 75% ක් ලියූ පසු “පිළිතුරු දී අවසන්” බොත්තම විවෘත වේ. විභක්ති/වචන රූප වෙනස් වුවත් කමක් නැත; නමුත් අර්ථ රහිත අකුරු හෝ පුනරුක්ත වචන ගණන් නොගනී.</p>'}
 else if(!G.length){h+='<p class="sub">මෙම කොටසට වචන ලැයිස්තුවක් නැත.</p>'}
 else if(m==2){var e=G[TQ.f%G.length];
 h+='<div class="card fc" onclick="flip()"><div><small>'+(TQ.fl?(p?"පාලි":"සිංහල"):(p?"සිංහල":"පාලි"))+'</small><br>'+esc(TQ.fl?e[1]:e[0])+'</div></div><p style="text-align:center"><button class="btn g sm" onclick="nx(-1)">◀</button> <span>'+(TQ.f+1)+' / '+G.length+'</span> <button class="btn g sm" onclick="nx(1)">▶</button></p><p class="sub" style="text-align:center">කාඩ්පත තට්ටු කර පෙරළන්න</p>'}
