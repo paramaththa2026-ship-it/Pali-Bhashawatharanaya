@@ -1885,7 +1885,7 @@ function wf(i){var s=wget(i);if(!WL()[i].t.every(function(_,q){return s.c[q]!==u
 function wr(i){wset(i,{c:[],f:0});wrd(i)}
 function wd(i){var k=key("wd",i);sv(k,ld(k)=="1"?"0":"1");wrd(i)}
 function les(i){TQ.e=i;var x=TR[i];ttl("පාඩම "+(i+1)+" / "+TR.length);
-app.innerHTML='<h1>'+esc(x.lt)+'</h1><div class="seg"><button class="btn sm" onclick="openEx('+i+')">'+PEN+' අභ්‍යාසය '+(i+1)+' කරමු</button></div><div class="card les">'+lessonHtml(x.l)+'</div><p class="seg" style="margin-top:18px">'
+app.innerHTML='<h1>'+esc(x.lt)+'</h1><div class="seg"><button class="btn sm" onclick="openEx('+i+')">'+PEN+' අභ්‍යාසය '+(i+1)+' කරමු</button></div><div class="card les">'+lessonHtml(x.l)+'</div>'+rvBtn(i)+'<p class="seg" style="margin-top:18px">'
 +(i>0?'<button class="btn g sm" onclick="les('+(i-1)+')">◀ පෙර පාඩම</button>':'')
 +'<button class="btn sm" onclick="openEx('+i+')">'+PEN+' අභ්‍යාසය '+(i+1)+'</button>'
 +(i<TR.length-1?'<button class="btn g sm" onclick="les('+(i+1)+')">ඊළඟ පාඩම ▶</button>':'')+'</p>';
@@ -1999,12 +1999,12 @@ var svt=null;try{svt=localStorage.getItem("pali_theme")}catch(e){}
 setTh(svt||"dark");
 var INEX=false,EX=0,SVK=/^pali_(tra|trd|wc|wd|nw)_(\d+)_/;
 function svHas(v){return !!v&&v!="0"&&!/^\{"c":\[\],/.test(v)&&!/^\{"c":\[(null,?)*\]/.test(v)}
-function svKeys(e){var o={},k,i;for(k in TA){var m=SVK.exec(k);if(m&&+m[2]==e)o[k]=TA[k]}try{for(i=0;i<localStorage.length;i++){k=localStorage.key(i);var m2=SVK.exec(k);if(m2&&+m2[2]==e&&!(k in o))o[k]=localStorage.getItem(k)}}catch(x){}return o}
+function svKeys(e){var o={},k,i;for(k in TA){var m=SVK.exec(k);if(m&&+m[2]==e)o[k]=TA[k]}try{for(i=0;i<localStorage.length;i++){k=localStorage.key(i);var m2=SVK.exec(k);if(m2&&+m2[2]==e&&!(k in o))o[k]=localStorage.getItem(k)}}catch(x){}var rk="pali_rvb_"+e,rv=ld(rk);if(rv)o[rk]=rv;return o}
 function hasProg(e){var o=svKeys(e),k;for(k in o)if(svHas(o[k]))return true;return false}
 function clrProg(e){var o=svKeys(e),k;for(k in o){delete TA[k];try{localStorage.removeItem(k)}catch(x){}}NSU={}}
 function setPend(e){try{if(e===null)localStorage.removeItem("pali_pend");else localStorage.setItem("pali_pend",String(e))}catch(x){}}
 function askSave(e,canCancel,done){var ov=document.createElement("div");ov.className="sv-ov";ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");
-ov.innerHTML='<div class="sv-bx"><h2>🙏 අභ්‍යාසය '+(e+1)+' – ඔබ කළ කොටස සේව් කරන්නද?</h2><p>'+(canCancel?'ඔබ මෙම අභ්‍යාසයේ ලියූ පිළිතුරු සහ ප්‍රගතිය ඇත. ඊළඟ වතාවේ ඒවායින් දිගටම කරගෙන යාමට මතකයේ තබා ගන්නද? නැතහොත් ඉවත් කර මුල සිට අලුතින් පරිවර්තනය කරන්නද?':'ඔබ පසුගිය වතාවේ අභ්‍යාසය '+(e+1)+' අතරමග නවතා ඇත. ඒ කළ කොටස මතකයේ තබා ගන්නද? නැතහොත් ඉවත් කර මුල සිට අලුතින් පරිවර්තනය කරන්නද?')+'</p><button class="btn" data-a="keep">💾 මතකයේ තබා ගන්න</button><button class="btn g" data-a="clear">🗑 අවශ්‍ය නැත – මුල සිට කරමි</button>'+(canCancel?'<button class="sc" data-a="stay">← දිගටම අභ්‍යාසය කරන්න</button>':'')+'</div>';
+ov.innerHTML='<div class="sv-bx"><h2>🙏 අභ්‍යාසය '+(e+1)+' – ඔබ කළ කොටස සේව් කරන්නද?</h2><p>'+(canCancel?'ඔබ මෙම අභ්‍යාසයේ ලියූ පිළිතුරු, ප්‍රගතිය සහ පුනරීක්ෂණ අභ්‍යාස ලකුණු ඇත. ඊළඟ වතාවේ ඒවායින් දිගටම කරගෙන යාමට මතකයේ තබා ගන්නද? නැතහොත් ඉවත් කර මුල සිට අලුතින් පරිවර්තනය කරන්නද?':'ඔබ පසුගිය වතාවේ අභ්‍යාසය '+(e+1)+' අතරමග නවතා ඇත. ඒ කළ කොටස මතකයේ තබා ගන්නද? නැතහොත් ඉවත් කර මුල සිට අලුතින් පරිවර්තනය කරන්නද?')+'</p><button class="btn" data-a="keep">💾 මතකයේ තබා ගන්න</button><button class="btn g" data-a="clear">🗑 අවශ්‍ය නැත – මුල සිට කරමි</button>'+(canCancel?'<button class="sc" data-a="stay">← දිගටම අභ්‍යාසය කරන්න</button>':'')+'</div>';
 ov.addEventListener("click",function(ev){var b=ev.target.closest("[data-a]");if(!b)return;var a=b.getAttribute("data-a");ov.remove();if(a=="stay")return;if(a=="clear")clrProg(e);setPend(null);done()});
 document.body.appendChild(ov);var f=ov.querySelector("button");if(f)f.focus()}
 (function(){var otr=tr;tr=function(){INEX=true;EX=TQ.e;return otr.apply(this,arguments)};
