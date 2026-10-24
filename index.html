@@ -300,6 +300,13 @@ main{z-index:1}
 .hub .bt2{flex:1;min-width:180px}.hub .bt2 b{display:block;color:var(--acc2)}.hub .bt2 small{color:var(--mut)}
 .hub .soon{opacity:.7;border-style:dashed}
 .vbf{position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + 47px);width:100%;height:calc(100vh - env(safe-area-inset-top,0px) - 47px);height:calc(100dvh - env(safe-area-inset-top,0px) - 47px);border:0;z-index:5;background:var(--bg)}
+
+.sv-ov{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.6);display:grid;place-items:center;padding:18px;animation:in .2s}
+.sv-bx{max-width:420px;width:100%;background:var(--card);border:1.5px solid var(--gold);border-radius:14px;padding:18px 18px 16px;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+.sv-bx h2{margin:0 0 8px;font-size:1.1rem;color:var(--acc2)}
+.sv-bx p{margin:0 0 14px;color:var(--ink);font-size:.95rem}
+.sv-bx .btn{display:block;width:100%;margin:8px 0 0}
+.sv-bx .sc{background:none;border:0;color:var(--mut);margin-top:10px;font:inherit;font-size:.85rem;cursor:pointer;text-decoration:underline;display:block;width:100%}
 </style>
 </head>
 <body>
@@ -1974,7 +1981,26 @@ document.addEventListener("keydown",function(e){if(e.key=="Escape")sp(false)});
 fapply();
 var svt=null;try{svt=localStorage.getItem("pali_theme")}catch(e){}
 setTh(svt||"dark");
-home();
+var INEX=false,EX=0,SVK=/^pali_(tra|trd|wc|wd|nw)_(\d+)_/;
+function svHas(v){return !!v&&v!="0"&&!/^\{"c":\[\],/.test(v)&&!/^\{"c":\[(null,?)*\]/.test(v)}
+function svKeys(e){var o={},k,i;for(k in TA){var m=SVK.exec(k);if(m&&+m[2]==e)o[k]=TA[k]}try{for(i=0;i<localStorage.length;i++){k=localStorage.key(i);var m2=SVK.exec(k);if(m2&&+m2[2]==e&&!(k in o))o[k]=localStorage.getItem(k)}}catch(x){}return o}
+function hasProg(e){var o=svKeys(e),k;for(k in o)if(svHas(o[k]))return true;return false}
+function clrProg(e){var o=svKeys(e),k;for(k in o){delete TA[k];try{localStorage.removeItem(k)}catch(x){}}NSU={}}
+function setPend(e){try{if(e===null)localStorage.removeItem("pali_pend");else localStorage.setItem("pali_pend",String(e))}catch(x){}}
+function askSave(e,canCancel,done){var ov=document.createElement("div");ov.className="sv-ov";ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");
+ov.innerHTML='<div class="sv-bx"><h2>🙏 අභ්‍යාසය '+(e+1)+' – ඔබ කළ කොටස සේව් කරන්නද?</h2><p>'+(canCancel?'ඔබ මෙම අභ්‍යාසයේ ලියූ පිළිතුරු සහ ප්‍රගතිය ඇත. ඊළඟ වතාවේ ඒවායින් දිගටම කරගෙන යාමට මතකයේ තබා ගන්නද? නැතහොත් ඉවත් කර මුල සිට අලුතින් පරිවර්තනය කරන්නද?':'ඔබ පසුගිය වතාවේ අභ්‍යාසය '+(e+1)+' අතරමග නවතා ඇත. ඒ කළ කොටස මතකයේ තබා ගන්නද? නැතහොත් ඉවත් කර මුල සිට අලුතින් පරිවර්තනය කරන්නද?')+'</p><button class="btn" data-a="keep">💾 මතකයේ තබා ගන්න</button><button class="btn g" data-a="clear">🗑 අවශ්‍ය නැත – මුල සිට කරමි</button>'+(canCancel?'<button class="sc" data-a="stay">← දිගටම අභ්‍යාසය කරන්න</button>':'')+'</div>';
+ov.addEventListener("click",function(ev){var b=ev.target.closest("[data-a]");if(!b)return;var a=b.getAttribute("data-a");ov.remove();if(a=="stay")return;if(a=="clear")clrProg(e);setPend(null);done()});
+document.body.appendChild(ov);var f=ov.querySelector("button");if(f)f.focus()}
+(function(){var otr=tr;tr=function(){INEX=true;EX=TQ.e;return otr.apply(this,arguments)};
+function guard(n,same){var o=window[n];window[n]=function(){var a=arguments,t=this;if(INEX&&hasProg(EX)){if(same&&same.apply(null,a))return o.apply(t,a);askSave(EX,true,function(){INEX=false;o.apply(t,a)});return}
+if(!(same&&same.apply(null,a)))INEX=false;return o.apply(t,a)}}
+guard("home");guard("hub");guard("vbOpen");
+guard("go",function(i){return i==EX});guard("les",function(i){return i==EX});guard("rvStart",function(e){return e==EX});guard("openEx",function(i){return i==EX});
+function pe(){if(INEX&&hasProg(EX))setPend(EX)}
+document.addEventListener("visibilitychange",function(){if(document.hidden)pe()});addEventListener("pagehide",pe);addEventListener("beforeunload",pe)})();
+function bootAsk(){var p=null;try{p=localStorage.getItem("pali_pend")}catch(x){}home();if(p===null||p==="")return;var e=parseInt(p,10);if(isNaN(e)||!hasProg(e)){setPend(null);return}askSave(e,false,function(){})}
+
+bootAsk();
 </script>
 </body>
 </html>
