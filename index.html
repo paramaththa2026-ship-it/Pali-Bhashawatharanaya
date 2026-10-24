@@ -502,10 +502,10 @@ if(i==0)sdInit();window.scrollTo(0,0)}
 var RQ=null;
 function rvBest(e){var v=parseInt(ld("pali_rvb_"+e));return isNaN(v)?-1:v}
 function rvBtn(e){var b=rvBest(e),n=RV[e]?RV[e].length:0;if(!n)return '';
-return '<div class="rvb"><p>'+(b>=0?'ඔබගේ හොඳම අවබෝධය: <b>'+b+'%</b> · ':'')+'පාඩමේ කරුණු පිළිබඳ ප්‍රශ්න '+n+' කින් අහඹු 10 ක් ඇසේ</p><button class="btn" onclick="rvStart('+e+')">📝 පාඩමේ පුනරීක්ෂණ අභ්‍යාස</button></div>'}
+return '<div class="rvb"><p>'+(b>=0?'ඔබගේ හොඳම අවබෝධය: <b>'+b+'%</b> · ':'')+'පාඩමේ කරුණු පිළිබඳ ප්‍රශ්න '+n+' ක් ඇත</p><button class="btn" onclick="rvStart('+e+')">📝 පාඩමේ පුනරීක්ෂණ අභ්‍යාස</button></div>'}
 function rvShuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
 function rvStart(e){var pool=RV[e];if(!pool||!pool.length)return;TQ.e=e;
-var ids=rvShuf(pool.map(function(_,i){return i})).slice(0,Math.min(10,pool.length));
+var ids=rvShuf(pool.map(function(_,i){return i}));
 RQ={e:e,qs:ids.map(function(i){var q=pool[i],o=rvShuf([0,1,2,3]);return {q:q[0],o:o.map(function(k){return q[1+k]}),a:o.indexOf(0),p:-1}}),i:0};
 ttl("පුනරීක්ෂණ අභ්‍යාසය · පාඩම "+(e+1));rvShow();window.scrollTo(0,0)}
 function rvShow(){var R=RQ,q=R.qs[R.i],n=R.qs.length,h='<h1>පුනරීක්ෂණ අභ්‍යාසය</h1><p class="sub">'+esc(TR[R.e].lt)+'</p><div class="card">'
