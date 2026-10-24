@@ -448,7 +448,7 @@ h+='<div class="nbt"><button class="btn sm'+(u.sd?' on':' g')+'" onclick="nsd('+
 if(u.sd)h+=sdHtml(i);
 if(u.vs&&d.vis)h+='<div class="vsp"><h6>📖 විස්තරය</h6>'+d.vis+'</div>';
 h+='</div>'}
-else h+='<p><button class="btn sm" id="wb'+i+'" onclick="tdone('+i+')"'+(ok?'':' disabled')+'>✅ පිළිතුරු දී අවසන්</button><span class="hint2" id="wh'+i+'" style="display:block;margin-top:6px">'+(ok?'':'පිළිතුරට අදාළ වචන 75% ක් ලියූ පසු විවෘත වේ')+'</span></p><p class="nlg">පිළිතුරු දී අවසන් පසු පද අන්වය, නිවැරදි පිළිතුර, සන්ධි සහ විස්තරය පෙනේ.</p>';
+else h+='<p><button class="btn sm" id="wb'+i+'" onclick="tdone('+i+')"'+(ok?'':' disabled')+'>✅ පිළිතුරු දී අවසන්</button><span class="hint2" id="wh'+i+'" style="display:block;margin-top:6px">'+(ok?'':'පිළිතුරට අදාළ වචන 75% ක් ලියූ පසු විවෘත වේ')+'</span></p>'+'<p class="nlg">පරිවර්තනය කළ පිළිතුරේ සහ ලබා දී ඇති නිවැරදි පිළිතුර 100% වචන වලින් සමාන නොවිය හැක. සමානාර්ථවත් පද යොදා ඇත්නම් නිවැරදි යැයි සළකන්න.</p>'+'<p class="nlg">පිළිතුරු දී අවසන් පසු පද අන්වය, නිවැරදි පිළිතුර, සන්ධි සහ විස්තරය පෙනේ.</p>';
 return h}
 function nrt(i){tretry(i)}
 function wget(i){try{var v=JSON.parse(ld(key("wc",i)));if(v&&v.c){for(var q=0;q<v.c.length;q++)if(v.c[q]===null)v.c[q]=undefined;return v}}catch(e){}return{c:[],f:0}}
@@ -509,7 +509,7 @@ var h='<span class="tag">වාක්‍යය '+(i+1)+'</span><p class="q">'+(p
 +'<div id="wp'+i+'">'+tbox(i,n,wcnt(ld(k)))+'</div>'
 +'<textarea rows="3" data-k="'+k+'" data-i="'+i+'" oninput="tin(this)"'+(on?' readonly':'')+' placeholder="මෙහි ඔබේ පරිවර්තනය ලියන්න…">'+esc(ld(k))+'</textarea>';
 if(on)h+='<div class="okb"><small>✅ නිවැරදි පිළිතුර</small>'+(p?pw(x.w.s[i].f):esc(x.w.p[i].f))+'</div><p><button class="btn g sm" onclick="tretry('+i+')">↺ නැවත උත්සාහ කරන්න</button></p>';
-else h+='<p><button class="btn sm" id="wb'+i+'" onclick="tdone('+i+')"'+(ok?'':' disabled')+'>✅ පිළිතුරු දී අවසන්</button><span class="hint2" id="wh'+i+'" style="display:block;margin-top:6px">'+(ok?'':'පිළිතුරට අදාළ වචන 75% ක් ලියූ පසු විවෘත වේ')+'</span></p>';
+else h+='<p><button class="btn sm" id="wb'+i+'" onclick="tdone('+i+')"'+(ok?'':' disabled')+'>✅ පිළිතුරු දී අවසන්</button><span class="hint2" id="wh'+i+'" style="display:block;margin-top:6px">'+(ok?'':'පිළිතුරට අදාළ වචන 75% ක් ලියූ පසු විවෘත වේ')+'</span></p><p class="nlg">පරිවර්තනය කළ පිළිතුරේ සහ ලබා දී ඇති නිවැරදි පිළිතුර 100% වචන වලින් සමාන නොවිය හැක. සමානාර්ථවත් පද යොදා ඇත්නම් නිවැරදි යැයි සළකන්න.</p><p class="nlg">පිළිතුරු දී අවසන් පසු පද අන්වය, නිවැරදි පිළිතුර, සන්ධි සහ විස්තරය පෙනේ.</p>';
 return h}
 function tin(el){var i=+el.getAttribute("data-i");sv(el.getAttribute("data-k"),el.value);var n=wm(i,el.value),ok=n>=tneed(i);document.getElementById("wp"+i).innerHTML=tbox(i,n,wcnt(el.value));var b=document.getElementById("wb"+i),w=document.getElementById("wh"+i);if(b)b.disabled=!ok;if(w)w.textContent=ok?"":'පිළිතුරට අදාළ වචන 75% ක් ලියූ පසු විවෘත වේ'}
 function tcnt(){var L=(TQ.t?TR[TQ.e].s:TR[TQ.e].p),d=L.filter(function(_,i){return ld(key("trd",i))=="1"}).length,e=document.getElementById("dc");if(e)e.textContent="🙏 "+d+"/"+L.length}
