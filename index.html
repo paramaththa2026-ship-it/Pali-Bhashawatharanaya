@@ -307,6 +307,22 @@ main{z-index:1}
 .sv-bx p{margin:0 0 14px;color:var(--ink);font-size:.95rem}
 .sv-bx .btn{display:block;width:100%;margin:8px 0 0}
 .sv-bx .sc{background:none;border:0;color:var(--mut);margin-top:10px;font:inherit;font-size:.85rem;cursor:pointer;text-decoration:underline;display:block;width:100%}
+
+.exc.x{display:block;text-align:center;padding:12px 24px 14px}
+.exc.x::before{left:8px}
+.exc.x::after{content:"";position:absolute;right:8px;top:50%;width:9px;height:9px;margin-top:-5px;border-radius:50%;background:var(--bg);box-shadow:inset 0 1px 2px rgba(0,0,0,.4)}
+.xt{display:flex;align-items:center;gap:10px;color:var(--gold);margin:0 0 10px}
+.xt::before,.xt::after{content:"";flex:1;border-top:1.5px solid var(--gold);opacity:.55}
+.xt span{font-size:1.18rem;font-weight:700;color:var(--acc2);padding:0 4px;letter-spacing:.2px}
+.xb{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:8px;align-items:stretch}
+.xbt{font:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:9px 6px;border-radius:12px;border:1.5px solid var(--gold);background:linear-gradient(var(--b1),var(--b2));color:#fff3d6;line-height:1.25;position:relative}
+.xbt i{font-style:normal;font-size:1.3rem;line-height:1}
+.xbt span{font-size:.8rem;font-weight:700}
+.xbt.g{background:var(--bg);color:var(--acc2)}
+.xbt.rv{border-color:var(--teal);color:var(--teal);background:linear-gradient(var(--bg),color-mix(in srgb,var(--teal) 10%,var(--bg)))}
+.xbt small{font-size:.7rem;color:var(--ok);font-weight:700}
+.xbt:hover{transform:translateY(-1px);box-shadow:0 3px 8px var(--sh)}
+@media(max-width:360px){.xb{grid-template-columns:1fr 1fr 1fr}.xbt span{font-size:.72rem}}
 </style>
 </head>
 <body>
@@ -1674,7 +1690,7 @@ function stem(w,n){return Array.from(zs(w)).slice(0,n).join("")}
 function key(k,i){return "pali_"+k+"_"+TQ.e+"_"+TQ.t+"_"+i}
 function ttl(t){document.getElementById("ttl").textContent=t}
 function hints(i){var x=TR[TQ.e],s=(TQ.t?x.s:x.p)[i],g=TQ.t?x.gs:x.gp,n=TQ.t?3:4;s=zs(s);return g.filter(function(e){return s.indexOf(stem(e[0],n))>=0})}
-function exCards(){return TR.map(function(x,i){return '<div class="exc"><span class="ic">'+(i+1)+'</span><span class="tx"><b>අභ්‍යාසය '+(i+1)+'</b></span><span class="bt"><button class="btn g sm" onclick="les('+i+')">📖 පාඩම</button><button class="btn sm" onclick="openEx('+i+')">'+PEN+' අභ්‍යාසය</button></span></div>'}).join('')}
+function exCards(){return TR.map(function(x,i){var b=rvBest(i),hr=RV[i]&&RV[i].length;return '<div class="exc x"><div class="xt"><span>අභ්‍යාසය '+(i+1)+'</span></div><div class="xb"><button class="xbt g" onclick="les('+i+')"><i>📖</i><span>පාඩම</span></button>'+(hr?'<button class="xbt g rv" onclick="rvStart('+i+')"><i>📝</i><span>පාඩමේ පුනරීක්ෂණ අභ්‍යාස</span>'+(b>=0?'<small>✔ '+b+'%</small>':'')+'</button>':'')+'<button class="xbt" onclick="openEx('+i+')"><i>'+PEN+'</i><span>අභ්‍යාසය</span></button></div></div>'}).join('')}
 
 function hub(){if(!document.getElementById("toc").hidden)tt();ttl("අතිරේක පොත්");
 app.innerHTML='<div class="hub"><h1>📚 අතිරේක පොත් හා ග්‍රන්ථ</h1><p class="sub">වරනැගීම් පොත් පමණක් නොව, අධ්‍යයනයට උපකාරී වෙනත් අතිරේක පොත් සහ ග්‍රන්ථද මෙහි එකතු වේ.</p><div class="card"><div class="bk"><span class="bi">📖</span><div class="bt2"><b>නාම වරනැඟිල්ල හා ආඛ්‍යාත වරනැඟිල්ල</b><small>සිප්කඩුවේ සුමඞ්ගල නායක හිමි · වරනැගීම් වගු 114ක්</small></div><button class="btn" onclick="vbOpen()">වරනැගීම</button></div></div><div class="card soon"><div class="bk"><span class="bi">✨</span><div class="bt2"><b>තවත් පොත් හා ග්‍රන්ථ</b><small>අලුත් පොත් මෙතැනට එකතු කළ හැක.</small></div></div></div></div>';window.scrollTo(0,0)}
@@ -1869,7 +1885,7 @@ function wf(i){var s=wget(i);if(!WL()[i].t.every(function(_,q){return s.c[q]!==u
 function wr(i){wset(i,{c:[],f:0});wrd(i)}
 function wd(i){var k=key("wd",i);sv(k,ld(k)=="1"?"0":"1");wrd(i)}
 function les(i){TQ.e=i;var x=TR[i];ttl("පාඩම "+(i+1)+" / "+TR.length);
-app.innerHTML='<h1>'+esc(x.lt)+'</h1><div class="seg"><button class="btn sm" onclick="openEx('+i+')">'+PEN+' අභ්‍යාසය '+(i+1)+' කරමු</button></div><div class="card les">'+lessonHtml(x.l)+'</div>'+rvBtn(i)+'<p class="seg" style="margin-top:18px">'
+app.innerHTML='<h1>'+esc(x.lt)+'</h1><div class="seg"><button class="btn sm" onclick="openEx('+i+')">'+PEN+' අභ්‍යාසය '+(i+1)+' කරමු</button></div><div class="card les">'+lessonHtml(x.l)+'</div><p class="seg" style="margin-top:18px">'
 +(i>0?'<button class="btn g sm" onclick="les('+(i-1)+')">◀ පෙර පාඩම</button>':'')
 +'<button class="btn sm" onclick="openEx('+i+')">'+PEN+' අභ්‍යාසය '+(i+1)+'</button>'
 +(i<TR.length-1?'<button class="btn g sm" onclick="les('+(i+1)+')">ඊළඟ පාඩම ▶</button>':'')+'</p>';
