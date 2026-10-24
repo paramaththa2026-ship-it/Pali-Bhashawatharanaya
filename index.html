@@ -2003,8 +2003,8 @@ function svKeys(e){var o={},k,i;for(k in TA){var m=SVK.exec(k);if(m&&+m[2]==e)o[
 function hasProg(e){var o=svKeys(e),k;for(k in o)if(svHas(o[k]))return true;return false}
 function clrProg(e){var o=svKeys(e),k;for(k in o){delete TA[k];try{localStorage.removeItem(k)}catch(x){}}NSU={}}
 function setPend(e){try{if(e===null)localStorage.removeItem("pali_pend");else localStorage.setItem("pali_pend",String(e))}catch(x){}}
-function askSave(e,canCancel,done){var ov=document.createElement("div");ov.className="sv-ov";ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");
-ov.innerHTML='<div class="sv-bx"><h2>🙏 අභ්‍යාසය '+(e+1)+' – ඔබ කළ කොටස සේව් කරන්නද?</h2><p>'+(canCancel?'ඔබ මෙම අභ්‍යාසයේ ලියූ පිළිතුරු, ප්‍රගතිය සහ පුනරීක්ෂණ අභ්‍යාස ලකුණු ඇත. ඊළඟ වතාවේ ඒවායින් දිගටම කරගෙන යාමට මතකයේ තබා ගන්නද? නැතහොත් ඉවත් කර මුල සිට අලුතින් පරිවර්තනය කරන්නද?':'ඔබ පසුගිය වතාවේ අභ්‍යාසය '+(e+1)+' අතරමග නවතා ඇත. ඒ කළ කොටස මතකයේ තබා ගන්නද? නැතහොත් ඉවත් කර මුල සිට අලුතින් පරිවර්තනය කරන්නද?')+'</p><button class="btn" data-a="keep">💾 මතකයේ තබා ගන්න</button><button class="btn g" data-a="clear">🗑 අවශ්‍ය නැත – මුල සිට කරමි</button>'+(canCancel?'<button class="sc" data-a="stay">← දිගටම අභ්‍යාසය කරන්න</button>':'')+'</div>';
+function askSave(e,canCancel,done,exit){var ov=document.createElement("div");ov.className="sv-ov";ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");
+ov.innerHTML='<div class="sv-bx"><h2>🙏 '+(exit?'ඇප් එකෙන් ඉවත් වීමට පෙර – ':'')+'අභ්‍යාසය '+(e+1)+' ඔබ කළ කොටස සේව් කරන්නද?</h2><p>'+(canCancel?'ඔබ මෙම අභ්‍යාසයේ ලියූ පිළිතුරු, ප්‍රගතිය සහ පුනරීක්ෂණ අභ්‍යාස ලකුණු ඇත. ඊළඟ වතාවේ ඒවායින් දිගටම කරගෙන යාමට මතකයේ තබා ගන්නද? නැතහොත් ඉවත් කර මුල සිට අලුතින් පරිවර්තනය කරන්නද?':'ඔබ පසුගිය වතාවේ අභ්‍යාසය '+(e+1)+' අතරමග නවතා ඇත. ඒ කළ කොටස මතකයේ තබා ගන්නද? නැතහොත් ඉවත් කර මුල සිට අලුතින් පරිවර්තනය කරන්නද?')+'</p><button class="btn" data-a="keep">💾 මතකයේ තබා ගන්න</button><button class="btn g" data-a="clear">🗑 අවශ්‍ය නැත – මුල සිට කරමි</button>'+(canCancel?'<button class="sc" data-a="stay">← දිගටම අභ්‍යාසය කරන්න</button>':'')+'</div>';
 ov.addEventListener("click",function(ev){var b=ev.target.closest("[data-a]");if(!b)return;var a=b.getAttribute("data-a");ov.remove();if(a=="stay")return;if(a=="clear")clrProg(e);setPend(null);done()});
 document.body.appendChild(ov);var f=ov.querySelector("button");if(f)f.focus()}
 (function(){var otr=tr;tr=function(){INEX=true;EX=TQ.e;return otr.apply(this,arguments)};
@@ -2017,6 +2017,13 @@ document.addEventListener("visibilitychange",function(){if(document.hidden)pe()}
 function bootAsk(){var p=null;try{p=localStorage.getItem("pali_pend")}catch(x){}home();if(p===null||p==="")return;var e=parseInt(p,10);if(isNaN(e)||!hasProg(e)){setPend(null);return}askSave(e,false,function(){})}
 
 bootAsk();
+(function(){var sent=false,bye=false;
+function push(){try{history.pushState({pali:1},"",location.href)}catch(x){}}
+try{push();sent=true}catch(x){}
+addEventListener("popstate",function(){if(bye||!sent)return;
+if(INEX&&hasProg(EX)){push();var e=EX;askSave(e,true,function(){bye=true;INEX=false;setPend(null);try{history.go(-2)}catch(x){}setTimeout(function(){bye=false;push()},700)},true)}
+else{bye=true;try{history.back()}catch(x){}setTimeout(function(){bye=false;push()},700)}});
+addEventListener("beforeunload",function(ev){if(!bye&&INEX&&hasProg(EX)){ev.preventDefault();ev.returnValue=""}})})();
 </script>
 </body>
 </html>
