@@ -525,7 +525,7 @@ var m=pc>=90?"🙏 අති විශිෂ්ටයි! පාඩම ඔබ �
 var h='<h1>පුනරීක්ෂණ ප්‍රතිඵලය</h1><p class="sub">'+esc(TR[R.e].lt)+'</p><div class="card"><p class="rv-lbl">පාඩම පිළිබඳ ඔබගේ අවබෝධය</p><div class="rv-big">'+pc+'%</div><p class="rv-lbl">ප්‍රශ්න '+n+' න් නිවැරදි '+c+'</p><p class="rv-msg" style="margin-top:10px">'+m+'</p>'+(pc>b&&b>=0?'<p class="rv-lbl">🌟 අලුත් හොඳම ප්‍රතිශතය! (කලින්: '+b+'%)</p>':b>=0?'<p class="rv-lbl">හොඳම ප්‍රතිශතය: '+Math.max(b,pc)+'%</p>':'');
 var w=R.qs.filter(function(q){return q.p!=q.a});
 if(w.length){h+='<h3 style="margin:14px 0 4px;color:var(--acc2)">නැවත බැලිය යුතු කරුණු</h3>';w.forEach(function(q){h+='<div class="rv-w">'+esc(q.q)+'<br><span class="y">ඔබ: '+esc(q.o[q.p])+'</span><br><span class="a">නිවැරදි: '+esc(q.o[q.a])+'</span></div>'})}
-h+='</div><p class="seg" style="margin-top:14px"><button class="btn" onclick="rvStart('+R.e+')">🔁 නැවත උත්සාහ කරන්න</button><button class="btn g sm" onclick="les('+R.e+')">◀ පාඩමට ආපසු</button>'+(R.e<TR.length-1?'<button class="btn g sm" onclick="les('+(R.e+1)+')">ඊළඟ පාඩම ▶</button>':'')+'</p>';
+h+='</div><p class="seg" style="margin-top:14px"><button class="btn" onclick="openEx('+R.e+')">'+PEN+' අභ්‍යාසය '+(R.e+1)+' කරමු ▶</button><button class="btn g sm" onclick="rvStart('+R.e+')">🔁 නැවත උත්සාහ කරන්න</button><button class="btn g sm" onclick="les('+R.e+')">◀ පාඩමට ආපසු</button>'+(R.e<TR.length-1?'<button class="btn g sm" onclick="les('+(R.e+1)+')">ඊළඟ පාඩම ▶</button>':'')+'</p>';
 app.innerHTML=h;window.scrollTo(0,0)}
 function dm(e){return 0}
 function openEx(i){TQ.e=i;TQ.t=0;TQ.m=dm(i);TQ.f=0;TQ.fl=0;tr();window.scrollTo(0,0)}
