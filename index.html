@@ -323,6 +323,22 @@ main{z-index:1}
 .xbt small{font-size:.7rem;color:var(--ok);font-weight:700}
 .xbt:hover{transform:translateY(-1px);box-shadow:0 3px 8px var(--sh)}
 @media(max-width:360px){.xb{grid-template-columns:1fr 1fr 1fr}.xbt span{font-size:.72rem}}
+
+.rv-fb{border-radius:12px;padding:10px 14px;margin:10px 0 8px;border:1.5px solid}
+.rv-fb.ok{background:rgba(47,107,63,.13);border-color:var(--ok)}
+.rv-fb.no{background:rgba(168,40,31,.10);border-color:var(--bad)}
+.rv-h{font-size:1rem}
+.rv-ww{font-size:1.3rem;font-weight:700;color:var(--ink);margin-top:4px}
+.rv-m{font-weight:400;color:var(--ink);margin-top:2px;font-size:.95rem}
+.rv-x{font-weight:400;color:var(--mut);margin-top:4px;font-size:.92rem}
+.rv-x s{text-decoration-color:var(--bad)}
+.rv-r{margin-top:8px;padding:8px 12px;border-radius:10px;background:var(--card);border:1.5px dashed var(--ok)}
+.rv-t{font-size:.78rem;color:var(--ok);font-weight:700;letter-spacing:.3px}
+.rv-fb.pop{animation:rvpop .35s}
+.rv-fb.shake{animation:rvshk .4s}
+@keyframes rvpop{0%{transform:scale(.94);opacity:0}60%{transform:scale(1.03)}100%{transform:scale(1);opacity:1}}
+@keyframes rvshk{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+@media(prefers-reduced-motion:reduce){.rv-fb.pop,.rv-fb.shake{animation:none}}
 </style>
 </head>
 <body>
@@ -1900,12 +1916,15 @@ function rvStart(e){var pool=RV[e];if(!pool||!pool.length)return;TQ.e=e;
 var ids=rvShuf(pool.map(function(_,i){return i}));
 RQ={e:e,qs:ids.map(function(i){var q=pool[i],o=rvShuf([0,1,2,3]);return {q:q[0],o:o.map(function(k){return q[1+k]}),a:o.indexOf(0),p:-1}}),i:0};
 ttl("පුනරීක්ෂණ අභ්‍යාසය · පාඩම "+(e+1));rvShow();window.scrollTo(0,0)}
+function rvSp(t){var m=/^(.*?)\s*\(([^()]*)\)\s*$/.exec(t);return m&&m[1]?[m[1],m[2]]:[t,""]}
 function rvShow(){var R=RQ,q=R.qs[R.i],n=R.qs.length,h='<h1>පුනරීක්ෂණ අභ්‍යාසය</h1><p class="sub">'+esc(TR[R.e].lt)+'</p><div class="card">'
 +'<div class="rv-top"><span>ප්‍රශ්නය '+(R.i+1)+' / '+n+'</span><span class="rv-pg"><i style="width:'+Math.round(R.i/n*100)+'%"></i></span></div>'
 +'<p class="rv-q">'+esc(q.q)+'</p>';
 q.o.forEach(function(t,k){var c='',d='';if(q.p>=0){d=' disabled';if(k==q.a)c=' ok';else if(k==q.p)c=' no'}
-h+='<button class="rv-o'+c+'"'+d+' onclick="rvPick('+k+')"><b>'+"අආඉඊ".charAt(k)+'.</b> '+esc(t)+'</button>'});
-if(q.p>=0){h+=(q.p==q.a?'<p class="rv-fb ok">✔ නිවැරදියි!</p>':'<p class="rv-fb no">✘ වැරදියි. නිවැරදි පිළිතුර: '+esc(q.o[q.a])+'</p>')
+h+='<button class="rv-o'+c+'"'+d+' onclick="rvPick('+k+')"><b>'+"අආඉඊ".charAt(k)+'.</b> '+esc(rvSp(t)[0])+'</button>'});
+if(q.p>=0){var ca=rvSp(q.o[q.a]),pk=rvSp(q.o[q.p]),good=q.p==q.a;
+h+=(good?'<div class="rv-fb ok pop"><div class="rv-h">🪷 නිවැරදියි! සාධු!</div><div class="rv-ww">'+esc(ca[0])+'</div>'+(ca[1]?'<div class="rv-m">📖 '+esc(ca[1])+'</div>':'')+'</div>'
+:'<div class="rv-fb no shake"><div class="rv-h">✘ වැරදියි</div><div class="rv-x">ඔබ තේරූ: <s>'+esc(pk[0])+'</s>'+(pk[1]?' <small>('+esc(pk[1])+')</small>':'')+'</div><div class="rv-r"><span class="rv-t">✅ නිවැරදි පදය</span><div class="rv-ww">'+esc(ca[0])+'</div>'+(ca[1]?'<div class="rv-m">📖 තේරුම / විස්තරය: '+esc(ca[1])+'</div>':'')+'</div></div>')
 +'<button class="btn" onclick="rvNext()">'+(R.i<n-1?'ඊළඟ ප්‍රශ්නය ▶':'ප්‍රතිඵලය බලන්න ✔')+'</button>'}
 h+='</div><p class="seg" style="margin-top:14px"><button class="btn g sm" onclick="les('+R.e+')">◀ පාඩමට ආපසු</button></p>';
 app.innerHTML=h}
@@ -1916,7 +1935,7 @@ if(pc>b)sv("pali_rvb_"+R.e,String(pc));
 var m=pc>=90?"🙏 අති විශිෂ්ටයි! පාඩම ඔබ මනාව අවබෝධ කරගෙන ඇත.":pc>=70?"👍 හොඳයි! අවබෝධය හොඳ මට්ටමක ඇත. දුර්වල තැන් නැවත බලන්න.":pc>=50?"📖 මධ්‍යස්ථයි. පාඩම නැවත කියවා නැවත උත්සාහ කරන්න.":"📚 පාඩම නැවත හොඳින් කියවා නැවත උත්සාහ කරන්න.";
 var h='<h1>පුනරීක්ෂණ ප්‍රතිඵලය</h1><p class="sub">'+esc(TR[R.e].lt)+'</p><div class="card"><p class="rv-lbl">පාඩම පිළිබඳ ඔබගේ අවබෝධය</p><div class="rv-big">'+pc+'%</div><p class="rv-lbl">ප්‍රශ්න '+n+' න් නිවැරදි '+c+'</p><p class="rv-msg" style="margin-top:10px">'+m+'</p>'+(pc>b&&b>=0?'<p class="rv-lbl">🌟 අලුත් හොඳම ප්‍රතිශතය! (කලින්: '+b+'%)</p>':b>=0?'<p class="rv-lbl">හොඳම ප්‍රතිශතය: '+Math.max(b,pc)+'%</p>':'');
 var w=R.qs.filter(function(q){return q.p!=q.a});
-if(w.length){h+='<h3 style="margin:14px 0 4px;color:var(--acc2)">නැවත බැලිය යුතු කරුණු</h3>';w.forEach(function(q){h+='<div class="rv-w">'+esc(q.q)+'<br><span class="y">ඔබ: '+esc(q.o[q.p])+'</span><br><span class="a">නිවැරදි: '+esc(q.o[q.a])+'</span></div>'})}
+if(w.length){h+='<h3 style="margin:14px 0 4px;color:var(--acc2)">නැවත බැලිය යුතු කරුණු</h3>';w.forEach(function(q){h+='<div class="rv-ww">'+esc(q.q)+'<br><span class="y">ඔබ: '+esc(q.o[q.p])+'</span><br><span class="a">නිවැරදි: '+esc(q.o[q.a])+'</span></div>'})}
 h+='</div><p class="seg" style="margin-top:14px"><button class="btn" onclick="openEx('+R.e+')">'+PEN+' අභ්‍යාසය '+(R.e+1)+' කරමු ▶</button><button class="btn g sm" onclick="rvStart('+R.e+')">🔁 නැවත උත්සාහ කරන්න</button><button class="btn g sm" onclick="les('+R.e+')">◀ පාඩමට ආපසු</button>'+(R.e<TR.length-1?'<button class="btn g sm" onclick="les('+(R.e+1)+')">ඊළඟ පාඩම ▶</button>':'')+'</p>';
 app.innerHTML=h;window.scrollTo(0,0)}
 function dm(e){return 0}
