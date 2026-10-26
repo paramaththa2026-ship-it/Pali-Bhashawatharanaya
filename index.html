@@ -3474,9 +3474,13 @@ function suggest(t){var out=[],ba=null,tl=t.length;
 WL.forEach(function(w){var sc=-1;if(w===t)sc=0;else if(w.indexOf(t)===0)sc=1;else if(tl>=2&&w.indexOf(t)>0)sc=2;else if(tl>=3&&Math.abs(w.length-tl)<=3){if(!ba)ba=bg(t);if(dice(ba,w)>=.6)sc=3}
 if(sc>=0)out.push([sc,w])});
 out.sort(function(a,b){return a[0]-b[0]||W[b[1]].c-W[a[1]].c||a[1].length-b[1].length});return out.slice(0,14)}
+function numItems(n){var r=[];function one(id,tag){var el=$(id);if(el){var l=el.querySelector('.gl');r.push({id:id,tag:tag,pre:l?l.textContent:''})}}
+one('g'+n,'');if(n>=1&&n<=9){one('gi'+n,'පණාමාදි');one('gz'+n,'නිගමන')}return r}
+function jump(id){var el=$(id);if(!el)return;clearMarks();hide();rs.hidden=true;try{q.blur()}catch(e){}el.scrollIntoView({block:'start',behavior:'smooth'});flash(el)}
 var cur=[],lastQ='',lastHits=null;
 function hide(){sg.hidden=true}
 function renderSg(){var n=nm(q.value).s;if(!n){hide();return}ready();var toks=n.split(' '),last=toks[toks.length-1],h='';cur=[];
+if(CFG.num&&/^\d+$/.test(last)&&toks.length==1){var ni=numItems(+last);if(ni.length){h+='<div class="hd">ගාථා අංකයට යන්න</div>';ni.forEach(function(x){cur.push({k:'n',id:x.id});h+='<button class="it" data-i="'+(cur.length-1)+'"><span class="w"><b>ගාථා '+(+last)+'</b> '+(x.tag?'<span class="tg">'+x.tag+'</span> ':'')+esc(x.pre.slice(0,46))+'</span></button>'})}}
 if(toks.length>1){cur.push({k:'s',v:n});h+='<button class="it" data-i="'+(cur.length-1)+'"><span class="w">“<b>'+esc(n)+'</b>” යන වාක්‍ය ඛණ්ඩය සොයන්න</span><span class="c">Enter</span></button>'}
 var sl=suggest(last),pre=toks.slice(0,-1).join(' ');
 if(sl.length){h+='<div class="hd">'+(toks.length>1?'අවසාන වචනයට ගැළපෙන වචන':'ගැළපෙන සහ සමාන වචන')+'</div>';sl.forEach(function(x){var w=x[1];cur.push({k:toks.length>1?'s':'w',v:toks.length>1?pre+' '+w:w});
@@ -3505,9 +3509,9 @@ function go(i){var L=lastHits,b=B[i];clearMarks();opn(b.el);mark(b.src,L.v,L.k);
 var m=b.el.querySelector('mark.bsh')||b.el;setTimeout(function(){m.scrollIntoView({block:'center',behavior:'smooth'});flash(b.el)},30)}
 q.addEventListener('input',function(){qx.hidden=!q.value;if(!q.value){hide();rs.hidden=true;lastHits=null;clearMarks();return}rs.hidden=true;renderSg()});
 q.addEventListener('focus',function(){if(q.value&&lastHits&&q.value==lastQ){sg.hidden=true;rs.hidden=false}else if(q.value)renderSg()});
-q.addEventListener('keydown',function(e){if(e.key=='Enter'){e.preventDefault();var n=nm(q.value).s;if(!n)return;ready();commit('s',n)}else if(e.key=='Escape'){hide();rs.hidden=true}});
+q.addEventListener('keydown',function(e){if(e.key=='Enter'){e.preventDefault();var n=nm(q.value).s;if(!n)return;ready();if(CFG.num&&/^\d+$/.test(n)){var ni=numItems(+n);if(ni.length==1){jump(ni[0].id);return}}commit('s',n)}else if(e.key=='Escape'){hide();rs.hidden=true}});
 qx.addEventListener('click',function(){q.value='';qx.hidden=true;hide();rs.hidden=true;lastHits=null;clearMarks();q.focus()});
-sg.addEventListener('click',function(e){var b=e.target.closest('button.it');if(!b)return;var it=cur[+b.getAttribute('data-i')];q.value=it.v;qx.hidden=false;commit(it.k,it.v)});
+sg.addEventListener('click',function(e){var b=e.target.closest('button.it');if(!b)return;var it=cur[+b.getAttribute('data-i')];if(it.k=='n'){jump(it.id);return}q.value=it.v;qx.hidden=false;commit(it.k,it.v)});
 rs.addEventListener('click',function(e){var t=e.target;if(t.closest('[data-x]')){rs.hidden=true;return}if(t.closest('[data-m]')){more();return}var r=t.closest('button.r');if(r)go(lastHits.h[+r.getAttribute('data-r')].i)});
 d.addEventListener('click',function(e){var t=e.target;if(t.closest&&!t.closest('#bsTop')){sg.hidden=true;rs.hidden=true}});
 })();
@@ -3574,7 +3578,7 @@ html{scroll-padding-top:84px !important}
 #brs .more{display:block;width:100%;padding:11px;border:0;background:var(--surface-2);color:var(--accent);font:inherit;font-weight:700;cursor:pointer}
 #brs .none{padding:16px;color:var(--ink-2);font-size:14px}
 .bsfl{animation:bsfl 1.8s ease-out}@keyframes bsfl{0%,40%{outline:3px solid var(--gold);outline-offset:3px}100%{outline:3px solid transparent;outline-offset:3px}}
-</style></head><body><div id="bsTop"><div class="bsb"><span class="bsi" aria-hidden="true">🔍</span><input id="bq" type="search" inputmode="search" autocomplete="off" spellcheck="false" placeholder="වචනයකින් සොයන්න…" aria-label="වචනයකින් සොයන්න"><button id="bqx" type="button" aria-label="මකන්න" hidden>✕</button></div><div id="bsg" hidden></div><div id="brs" hidden></div></div>
+</style></head><body><div id="bsTop"><div class="bsb"><span class="bsi" aria-hidden="true">🔍</span><input id="bq" type="search" inputmode="search" autocomplete="off" spellcheck="false" placeholder="වචනයකින් හෝ අංකයකින් සොයන්න…" aria-label="වචනයකින් හෝ අංකයකින් සොයන්න"><button id="bqx" type="button" aria-label="මකන්න" hidden>✕</button></div><div id="bsg" hidden></div><div id="brs" hidden></div></div>
 <main><header class="mast"><p class="eyebrow">ශබ්දකෝශය · අභිධානප්පදීපිකා</p><h1>අභිධානප්පදීපිකා</h1><p class="sub">මූලගාථා සහ ටීකා</p>
 <ul class="chips"><li><b>1203</b> ගාථා</li><li><b>1196</b> ටීකා සහිත</li><li><b>3</b> කණ්ඩ</li></ul>
 <p class="ed">එක් එක් ගාථාව යටින් ඒ ගාථාවට අදාළ අභිධානප්පදීපිකාටීකා විස්තරය දැක්වේ. <small>ටීකාව නැවත ස්පර්ශ කළ විට හෝ පිටතින් ස්පර්ශ කළ විට හැකිලේ.</small></p></header>
@@ -5973,7 +5977,7 @@ addEventListener('pointerdown',function(){try{parent.postMessage({sp:0},'*')}cat
 addEventListener('message',function(e){if(e.data&&e.data.th)d.documentElement.setAttribute('data-theme',e.data.th)});
 })();
 </script><script>(function(){
-var CFG={sel:'main .gx,main details.tk',head:'h2,h3',txt:function(el){return el.tagName=='DETAILS'?el.querySelector('.tb').textContent:el.textContent},src:function(el){return el.tagName=='DETAILS'?el.querySelector('.tb'):el},lab:function(el,c){if(el.tagName=='DETAILS')return el.querySelector('summary').textContent.replace(/\s+/g,' ').trim();var g=el.querySelector('.gn');return g?g.textContent.trim():c},tag:function(el){return el.tagName=='DETAILS'?'ටීකාව':'ගාථාව'}};
+var CFG={num:1,sel:'main .gx,main details.tk',head:'h2,h3',txt:function(el){return el.tagName=='DETAILS'?el.querySelector('.tb').textContent:el.textContent},src:function(el){return el.tagName=='DETAILS'?el.querySelector('.tb'):el},lab:function(el,c){if(el.tagName=='DETAILS')return el.querySelector('summary').textContent.replace(/\s+/g,' ').trim();var g=el.querySelector('.gn');return g?g.textContent.trim():c},tag:function(el){return el.tagName=='DETAILS'?'ටීකාව':'ගාථාව'}};
 var d=document,$=function(i){return d.getElementById(i)},q=$('bq'),sg=$('bsg'),rs=$('brs'),qx=$('bqx');
 if(!q)return;
 var PUN=/[‘’“”"',;.:!?()\[\]–—\-\/|=~*_<>{}]/;
@@ -5995,9 +5999,13 @@ function suggest(t){var out=[],ba=null,tl=t.length;
 WL.forEach(function(w){var sc=-1;if(w===t)sc=0;else if(w.indexOf(t)===0)sc=1;else if(tl>=2&&w.indexOf(t)>0)sc=2;else if(tl>=3&&Math.abs(w.length-tl)<=3){if(!ba)ba=bg(t);if(dice(ba,w)>=.6)sc=3}
 if(sc>=0)out.push([sc,w])});
 out.sort(function(a,b){return a[0]-b[0]||W[b[1]].c-W[a[1]].c||a[1].length-b[1].length});return out.slice(0,14)}
+function numItems(n){var r=[];function one(id,tag){var el=$(id);if(el){var l=el.querySelector('.gl');r.push({id:id,tag:tag,pre:l?l.textContent:''})}}
+one('g'+n,'');if(n>=1&&n<=9){one('gi'+n,'පණාමාදි');one('gz'+n,'නිගමන')}return r}
+function jump(id){var el=$(id);if(!el)return;clearMarks();hide();rs.hidden=true;try{q.blur()}catch(e){}el.scrollIntoView({block:'start',behavior:'smooth'});flash(el)}
 var cur=[],lastQ='',lastHits=null;
 function hide(){sg.hidden=true}
 function renderSg(){var n=nm(q.value).s;if(!n){hide();return}ready();var toks=n.split(' '),last=toks[toks.length-1],h='';cur=[];
+if(CFG.num&&/^\d+$/.test(last)&&toks.length==1){var ni=numItems(+last);if(ni.length){h+='<div class="hd">ගාථා අංකයට යන්න</div>';ni.forEach(function(x){cur.push({k:'n',id:x.id});h+='<button class="it" data-i="'+(cur.length-1)+'"><span class="w"><b>ගාථා '+(+last)+'</b> '+(x.tag?'<span class="tg">'+x.tag+'</span> ':'')+esc(x.pre.slice(0,46))+'</span></button>'})}}
 if(toks.length>1){cur.push({k:'s',v:n});h+='<button class="it" data-i="'+(cur.length-1)+'"><span class="w">“<b>'+esc(n)+'</b>” යන වාක්‍ය ඛණ්ඩය සොයන්න</span><span class="c">Enter</span></button>'}
 var sl=suggest(last),pre=toks.slice(0,-1).join(' ');
 if(sl.length){h+='<div class="hd">'+(toks.length>1?'අවසාන වචනයට ගැළපෙන වචන':'ගැළපෙන සහ සමාන වචන')+'</div>';sl.forEach(function(x){var w=x[1];cur.push({k:toks.length>1?'s':'w',v:toks.length>1?pre+' '+w:w});
@@ -6026,9 +6034,9 @@ function go(i){var L=lastHits,b=B[i];clearMarks();opn(b.el);mark(b.src,L.v,L.k);
 var m=b.el.querySelector('mark.bsh')||b.el;setTimeout(function(){m.scrollIntoView({block:'center',behavior:'smooth'});flash(b.el)},30)}
 q.addEventListener('input',function(){qx.hidden=!q.value;if(!q.value){hide();rs.hidden=true;lastHits=null;clearMarks();return}rs.hidden=true;renderSg()});
 q.addEventListener('focus',function(){if(q.value&&lastHits&&q.value==lastQ){sg.hidden=true;rs.hidden=false}else if(q.value)renderSg()});
-q.addEventListener('keydown',function(e){if(e.key=='Enter'){e.preventDefault();var n=nm(q.value).s;if(!n)return;ready();commit('s',n)}else if(e.key=='Escape'){hide();rs.hidden=true}});
+q.addEventListener('keydown',function(e){if(e.key=='Enter'){e.preventDefault();var n=nm(q.value).s;if(!n)return;ready();if(CFG.num&&/^\d+$/.test(n)){var ni=numItems(+n);if(ni.length==1){jump(ni[0].id);return}}commit('s',n)}else if(e.key=='Escape'){hide();rs.hidden=true}});
 qx.addEventListener('click',function(){q.value='';qx.hidden=true;hide();rs.hidden=true;lastHits=null;clearMarks();q.focus()});
-sg.addEventListener('click',function(e){var b=e.target.closest('button.it');if(!b)return;var it=cur[+b.getAttribute('data-i')];q.value=it.v;qx.hidden=false;commit(it.k,it.v)});
+sg.addEventListener('click',function(e){var b=e.target.closest('button.it');if(!b)return;var it=cur[+b.getAttribute('data-i')];if(it.k=='n'){jump(it.id);return}q.value=it.v;qx.hidden=false;commit(it.k,it.v)});
 rs.addEventListener('click',function(e){var t=e.target;if(t.closest('[data-x]')){rs.hidden=true;return}if(t.closest('[data-m]')){more();return}var r=t.closest('button.r');if(r)go(lastHits.h[+r.getAttribute('data-r')].i)});
 d.addEventListener('click',function(e){var t=e.target;if(t.closest&&!t.closest('#bsTop')){sg.hidden=true;rs.hidden=true}});
 })();
@@ -7424,9 +7432,13 @@ function suggest(t){var out=[],ba=null,tl=t.length;
 WL.forEach(function(w){var sc=-1;if(w===t)sc=0;else if(w.indexOf(t)===0)sc=1;else if(tl>=2&&w.indexOf(t)>0)sc=2;else if(tl>=3&&Math.abs(w.length-tl)<=3){if(!ba)ba=bg(t);if(dice(ba,w)>=.6)sc=3}
 if(sc>=0)out.push([sc,w])});
 out.sort(function(a,b){return a[0]-b[0]||W[b[1]].c-W[a[1]].c||a[1].length-b[1].length});return out.slice(0,14)}
+function numItems(n){var r=[];function one(id,tag){var el=$(id);if(el){var l=el.querySelector('.gl');r.push({id:id,tag:tag,pre:l?l.textContent:''})}}
+one('g'+n,'');if(n>=1&&n<=9){one('gi'+n,'පණාමාදි');one('gz'+n,'නිගමන')}return r}
+function jump(id){var el=$(id);if(!el)return;clearMarks();hide();rs.hidden=true;try{q.blur()}catch(e){}el.scrollIntoView({block:'start',behavior:'smooth'});flash(el)}
 var cur=[],lastQ='',lastHits=null;
 function hide(){sg.hidden=true}
 function renderSg(){var n=nm(q.value).s;if(!n){hide();return}ready();var toks=n.split(' '),last=toks[toks.length-1],h='';cur=[];
+if(CFG.num&&/^\d+$/.test(last)&&toks.length==1){var ni=numItems(+last);if(ni.length){h+='<div class="hd">ගාථා අංකයට යන්න</div>';ni.forEach(function(x){cur.push({k:'n',id:x.id});h+='<button class="it" data-i="'+(cur.length-1)+'"><span class="w"><b>ගාථා '+(+last)+'</b> '+(x.tag?'<span class="tg">'+x.tag+'</span> ':'')+esc(x.pre.slice(0,46))+'</span></button>'})}}
 if(toks.length>1){cur.push({k:'s',v:n});h+='<button class="it" data-i="'+(cur.length-1)+'"><span class="w">“<b>'+esc(n)+'</b>” යන වාක්‍ය ඛණ්ඩය සොයන්න</span><span class="c">Enter</span></button>'}
 var sl=suggest(last),pre=toks.slice(0,-1).join(' ');
 if(sl.length){h+='<div class="hd">'+(toks.length>1?'අවසාන වචනයට ගැළපෙන වචන':'ගැළපෙන සහ සමාන වචන')+'</div>';sl.forEach(function(x){var w=x[1];cur.push({k:toks.length>1?'s':'w',v:toks.length>1?pre+' '+w:w});
@@ -7455,9 +7467,9 @@ function go(i){var L=lastHits,b=B[i];clearMarks();opn(b.el);mark(b.src,L.v,L.k);
 var m=b.el.querySelector('mark.bsh')||b.el;setTimeout(function(){m.scrollIntoView({block:'center',behavior:'smooth'});flash(b.el)},30)}
 q.addEventListener('input',function(){qx.hidden=!q.value;if(!q.value){hide();rs.hidden=true;lastHits=null;clearMarks();return}rs.hidden=true;renderSg()});
 q.addEventListener('focus',function(){if(q.value&&lastHits&&q.value==lastQ){sg.hidden=true;rs.hidden=false}else if(q.value)renderSg()});
-q.addEventListener('keydown',function(e){if(e.key=='Enter'){e.preventDefault();var n=nm(q.value).s;if(!n)return;ready();commit('s',n)}else if(e.key=='Escape'){hide();rs.hidden=true}});
+q.addEventListener('keydown',function(e){if(e.key=='Enter'){e.preventDefault();var n=nm(q.value).s;if(!n)return;ready();if(CFG.num&&/^\d+$/.test(n)){var ni=numItems(+n);if(ni.length==1){jump(ni[0].id);return}}commit('s',n)}else if(e.key=='Escape'){hide();rs.hidden=true}});
 qx.addEventListener('click',function(){q.value='';qx.hidden=true;hide();rs.hidden=true;lastHits=null;clearMarks();q.focus()});
-sg.addEventListener('click',function(e){var b=e.target.closest('button.it');if(!b)return;var it=cur[+b.getAttribute('data-i')];q.value=it.v;qx.hidden=false;commit(it.k,it.v)});
+sg.addEventListener('click',function(e){var b=e.target.closest('button.it');if(!b)return;var it=cur[+b.getAttribute('data-i')];if(it.k=='n'){jump(it.id);return}q.value=it.v;qx.hidden=false;commit(it.k,it.v)});
 rs.addEventListener('click',function(e){var t=e.target;if(t.closest('[data-x]')){rs.hidden=true;return}if(t.closest('[data-m]')){more();return}var r=t.closest('button.r');if(r)go(lastHits.h[+r.getAttribute('data-r')].i)});
 d.addEventListener('click',function(e){var t=e.target;if(t.closest&&!t.closest('#bsTop')){sg.hidden=true;rs.hidden=true}});
 })();
