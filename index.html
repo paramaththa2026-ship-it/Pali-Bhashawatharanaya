@@ -7780,6 +7780,8 @@ else{if(RV[e]&&RV[e].length)b+='<button class="btn g" onclick="rvStart('+e+')">�
 b+=(e<TR.length-1?'<button class="btn" onclick="openEx('+(e+1)+')">ඊළඟ අභ්‍යාසය '+(e+2)+' ▶</button>':'<button class="btn" onclick="home()">🏠 මුල් පිටුවට</button>')}
 return '<p class="nxt" style="text-align:center;margin:20px 0 8px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'+b+'</p>'}
 
+var SXU={};
+function sxd(s,i){var k=s+'_'+i;SXU[k]=!SXU[k];sxrd(s,i)}
 function sxk(s,i){return "pali_sx_"+TQ.e+"_"+s+"_"+i}
 function sxg(s,i){try{var v=JSON.parse(ld(sxk(s,i)));if(v&&v.u)return v}catch(e){}return{a:-1,m:-1,u:[],e:0}}
 function sxs(s,i,v){sv(sxk(s,i),JSON.stringify(v))}
@@ -7795,12 +7797,12 @@ if(v.a>=0)h+='<p class="hl">2. මෙහි ප්‍රධාන සන්ධ�
 if(v.m>=0&&n>0){h+='<p class="hl">3. සන්ධි පියවර නියම පිළිවෙලට තබන්න <small>(මුල “විසන්ධි” සහ අග “ජිනවචනයුත්තං හි” දැනටමත් ඇත)</small></p><div class="sxl"><span class="sxc ok">1. විසන්ධි</span>'
 +v.u.map(function(j,q){return '<span class="sxc ok">'+(q+2)+'. '+esc(it.mid[j])+'</span>'}).join('')+'</div>';
 if(v.u.length<n){h+='<div class="sxl">'+it.sh.filter(function(j){return v.u.indexOf(j)<0}).map(function(j){return '<button class="btn g sm" onclick="sxo('+s+','+i+','+j+')">'+esc(it.mid[j])+'</button>'}).join('')+'</div>'+(v.e?'<small class="sub">❌ වැරදි තේරීම් '+v.e+' – ඊළඟට එන පියවර තෝරන්න</small>':'')}}
-if(sxFin(s,i)){h+='<div class="okb"><b>✔ සම්පූර්ණ සන්ධි සාධනය</b></div>'+sxDer(it.d)+'<p><button class="btn g sm" onclick="sxr('+s+','+i+')">↺ නැවත උත්සාහ කරන්න</button></p>'}
+if(sxFin(s,i)){var op=SXU[s+"_"+i];h+='<div class="okb"><b>✔ සියල්ල නිවැරදියි</b></div><div class="sxd nbt"><button class="btn sm'+(op?' on':' g')+'" onclick="sxd('+s+','+i+')">🔗 සන්ධි සාධනය'+(op?' ▲':' ▼')+'</button><button class="btn g sm" onclick="sxr('+s+','+i+')">↺ නැවත උත්සාහ කරන්න</button></div>'+(op?'<div class="sxd">'+sxDer(it.d)+'</div>':'')}
 return h}
 function sxrd(s,i){var el=document.getElementById("sx"+s+"_"+i);if(el)el.innerHTML=sxcard(s,i);sxdc()}
 function sxp(s,i,f,k){var v=sxg(s,i);if(v[f]>=0)return;v[f]=k;sxs(s,i,v);sxrd(s,i)}
 function sxo(s,i,j){var it=sxL(s)[i],v=sxg(s,i);if(v.u.indexOf(j)>=0)return;if(it.mid[j]===it.mid[v.u.length])v.u.push(j);else v.e++;sxs(s,i,v);sxrd(s,i)}
-function sxr(s,i){sv(sxk(s,i),"0");sxrd(s,i)}
+function sxr(s,i){SXU[s+'_'+i]=0;sv(sxk(s,i),"0");sxrd(s,i)}
 function sxsub(n){TQ.sx=n;tr()}
 function sxhtml(){var s=TQ.sx|0,x=TR[TQ.e].sx,L=sxL(s);
 var h='<div class="seg"><button class="btn sm'+(s?' g':'')+'" onclick="sxsub(0)">✂️ බිඳ දක්වන්න ('+x.s.length+')</button><button class="btn sm'+(s?'':' g')+'" onclick="sxsub(1)">🔗 සන්ධි කරන්න ('+x.j.length+')</button></div>'
@@ -7841,6 +7843,7 @@ document.addEventListener("click",function(e){var p=document.getElementById("sp"
 document.addEventListener("keydown",function(e){if(e.key=="Escape")sp(false)});function hidToc(){var t=document.getElementById("toc");if(t&&!t.hidden)t.hidden=true}
 function fold(t){var tc=document.getElementById("toc");if(tc&&!tc.hidden&&!t.closest("#toc")&&!t.closest('button[onclick="tt()"]'))tc.hidden=true;
 if(!t.closest(".sdp,.vsp,.nbt")){for(var k in NSU){var u=NSU[k];if(u&&(u.sd||u.vs)){var a=k.split(".");u.sd=0;u.vs=0;if(+a[0]==TQ.e&&+a[1]==TQ.t&&document.getElementById("nc"+a[2]))nrd(+a[2])}}}
+for(var q in SXU)if(SXU[q]&&!t.closest(".sxd,.sdq,.sdr,.sux")){SXU[q]=0;var a=q.split('_');sxrd(+a[0],+a[1])}
 if(!t.closest(".sdq,.sdr"))document.querySelectorAll(".sdq").forEach(function(q){var r=q.previousElementSibling;if(r)r.classList.remove("on");q.remove()});
 document.querySelectorAll("details.sux[open]").forEach(function(d){if(!d.contains(t))d.removeAttribute("open")});
 if(document.getElementById("dc")&&(TQ.m==2||TQ.m==3)&&!t.closest(".card,button,a,header,#sp,#toc,#ws,input,textarea"))tabM(0)}
