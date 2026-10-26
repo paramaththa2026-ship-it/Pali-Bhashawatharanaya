@@ -7785,7 +7785,7 @@ var d=L.filter(function(_,i){return m==1?wget(i).f:ld(key("trd",i))=="1"}).lengt
 var h='<div class="top"><button class="btn g sm" onclick="les(TQ.e)">📖 පාඩම</button><span id="dc">🙏 '+d+'/'+L.length+'</span></div><h1>'+PEN+' අභ්‍යාසය '+(TQ.e+1)+' – වාක්‍ය පරිවර්තන</h1>'
 
 +'<p class="hint2">💡 පාලි වචන එබූ විට ශබ්දකෝෂයෙන් එහි තේරුම පෙනේ.</p><div class="seg"><button class="btn sm'+(p?' g':'')+'" onclick="tabT(0)">සිංහලට නැඟිය යුතු ('+x.p.length+')</button><button class="btn sm'+(p?'':' g')+'" onclick="tabT(1)">පාලියට නැඟිය යුතු ('+x.s.length+')</button></div>'
-+'<div class="seg">'+["📝 වාක්‍ය","","🗂 වචන කාඩ්පත්","📚 අමුතු වචන"].map(function(t,i){return i==1?'':'<button class="btn sm'+(m==i?'':' g')+'" onclick="tabM('+i+')">'+t+'</button>'}).join('')+'</div>';
++'<div class="seg">'+["📝 වාක්‍ය","","🗂 වචන කාඩ්පත්","📚 අමුතු වචන"].map(function(t,i){return i==1||i==2?'':'<button class="btn sm'+(m==i?'':' g')+'" onclick="tabM('+i+')">'+t+'</button>'}).join('')+'</div>';
 if(m==1){h+=wcards(L)+nextBtn()}
 else if(m==0){
 L.forEach(function(s,i){h+='<div class="card" id="nc'+i+'">'+ncard(i)+'</div>'});
