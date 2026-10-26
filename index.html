@@ -4939,20 +4939,20 @@ var o=[0,1,2];for(var k=2;k>0;k--){var r=Math.floor(Math.random()*(k+1)),t=o[k];
 var v={o:o,c:-1};sv(key("nw",i),JSON.stringify(v));return v}
 function nrd(i){var el=document.getElementById("nc"+i);if(el)el.innerHTML=ncard(i)}
 function nsel(i,k){var v=nget(i);if(v.c>=0)return;v.c=k;sv(key("nw",i),JSON.stringify(v));nrd(i)}
-function nk(i){return TQ.e+'.'+TQ.t+'.'+i}
+function nkey(i){return TQ.e+'.'+TQ.t+'.'+i}
 function Wd(i){var x=TR[TQ.e];return (TQ.t?x.w.s:x.w.p)[i]}
-function nsd(i){var u=NSU[nk(i)]=NSU[nk(i)]||{};u.sd=!u.sd;u.vs=0;nrd(i)}
-function nvs(i){var u=NSU[nk(i)]=NSU[nk(i)]||{};u.vs=!u.vs;u.sd=0;nrd(i)}
-function nst(i,t){var u=NSU[nk(i)]=NSU[nk(i)]||{};u.t=t;u.sd=1;nrd(i)}
+function nsd(i){var u=NSU[nkey(i)]=NSU[nkey(i)]||{};u.sd=!u.sd;u.vs=0;nrd(i)}
+function nvs(i){var u=NSU[nkey(i)]=NSU[nkey(i)]||{};u.vs=!u.vs;u.sd=0;nrd(i)}
+function nst(i,t){var u=NSU[nkey(i)]=NSU[nkey(i)]||{};u.t=t;u.sd=1;nrd(i)}
 function sgm(g){var c=g[1],t=esc(g[0]);if(c=="x")return "<s>"+t+"</s>";if(c=="v")return '<span class="v">'+t+'</span>';if(c=="p")return '<span class="pl">'+t+'</span>';if(c=="j")return '<span class="jc">'+t+'</span>';if(c=="z"){var z=t.split(">");return '<span class="zp"><span class="zo">'+z[0]+'</span><span class="za">⟶</span><span class="zn">'+z[1]+'</span></span>'}return t}
 function srow(t,n){return '<div class="st"><span class="ex">'+t.map(sgm).join('')+'</span>'+chp(n)+'</div>'}
-function sdHtml(i){var d=Wd(i),u=NSU[nk(i)]||{},t=u.t||0,x=d.sd[t];
+function sdHtml(i){var d=Wd(i),u=NSU[nkey(i)]||{},t=u.t||0,x=d.sd[t];
 var h='<div class="sdp">';
 if(d.sd.length>1)h+='<div class="sdt">'+d.sd.map(function(z,k){return '<button class="'+(k==t?'on':'')+'" onclick="nst('+i+','+k+')">සන්ධි '+(k+1)+' · '+esc(z.a)+' + '+esc(z.b)+'</button>'}).join('')+'</div>';
 h+='<div class="blk" style="margin:4px 0 0">'+srow([[x.r,"r"]],"ජිනවචනයුත්තඤ්හි");
 x.steps.forEach(function(s){h+=srow(s.t,s.n)});
 return h+'</div></div>'}
-function ncard(i){var p=TQ.t,x=TR[TQ.e],d=Wd(i),u=NSU[nk(i)]||{},k=key("tra",i),on=ld(key("trd",i))=="1",n=wm(i,ld(k)),ok=n>=tneed(i),hs=[];
+function ncard(i){var p=TQ.t,x=TR[TQ.e],d=Wd(i),u=NSU[nkey(i)]||{},k=key("tra",i),on=ld(key("trd",i))=="1",n=wm(i,ld(k)),ok=n>=tneed(i),hs=[];
 var h='<span class="tag">වාක්‍යය '+(i+1)+'</span><p class="q">'+(p?esc(x.s[i]):pw(x.p[i]))+'</p>'
 +(hs.length?'<details><summary>💡 ඉඟි වචන ('+hs.length+')</summary>'+hs.map(function(e){return '<div class="rev"><b>'+esc(e[0])+'</b> = '+esc(e[1])+'</div>'}).join('')+'</details>':'')
 +'<div id="wp'+i+'">'+tbox(i,n,wcnt(ld(k)))+'</div>'
@@ -5064,7 +5064,7 @@ function tin(el){var i=+el.getAttribute("data-i");sv(el.getAttribute("data-k"),e
 function tcnt(){var L=(TQ.t?TR[TQ.e].s:TR[TQ.e].p),d=L.filter(function(_,i){return ld(key("trd",i))=="1"}).length,e=document.getElementById("dc");if(e)e.textContent="🙏 "+d+"/"+L.length}
 function cH(i){return ncard(i)}function cE(i){return document.getElementById("nc"+i)}
 function tdone(i){if(wm(i,ld(key("tra",i)))<tneed(i))return;sv(key("trd",i),"1");cE(i).innerHTML=cH(i);tcnt()}
-function tretry(i){sv(key("trd",i),"0");sv(key("tra",i),"");NSU[nk(i)]={};cE(i).innerHTML=cH(i);tcnt()}
+function tretry(i){sv(key("trd",i),"0");sv(key("tra",i),"");NSU[nkey(i)]={};cE(i).innerHTML=cH(i);tcnt()}
 function dn(i){var k=key("trd",i);sv(k,ld(k)=="1"?"0":"1");tr()}
 function flip(){TQ.fl=!TQ.fl;tr()}
 function nx(d){var x=TR[TQ.e],n=(TQ.t?x.gs:x.gp).length;TQ.f=(TQ.f+d+n)%n;TQ.fl=0;tr()}
@@ -5103,7 +5103,13 @@ function fapply(){FS=Math.max(-3,Math.min(8,FS));document.documentElement.style.
 function fs(d){FS+=d;fapply()}
 function sp(force){var p=document.getElementById("sp"),o=typeof force=="boolean"?force:p.hidden;p.hidden=!o;document.getElementById("stb").setAttribute("aria-expanded",o?"true":"false")}
 document.addEventListener("click",function(e){var p=document.getElementById("sp");if(p&&!p.hidden&&!e.target.closest("#sp")&&!e.target.closest("#stb"))sp(false)});
-document.addEventListener("keydown",function(e){if(e.key=="Escape")sp(false)});window.addEventListener("message",function(e){if(e.data&&e.data.sp===0)sp(false)});window.addEventListener("blur",function(){sp(false)});
+document.addEventListener("keydown",function(e){if(e.key=="Escape")sp(false)});function hidToc(){var t=document.getElementById("toc");if(t&&!t.hidden)t.hidden=true}
+function fold(t){var tc=document.getElementById("toc");if(tc&&!tc.hidden&&!t.closest("#toc")&&!t.closest('button[onclick="tt()"]'))tc.hidden=true;
+if(!t.closest(".sdp,.vsp,.nbt")){for(var k in NSU){var u=NSU[k];if(u&&(u.sd||u.vs)){var a=k.split(".");u.sd=0;u.vs=0;if(+a[0]==TQ.e&&+a[1]==TQ.t&&document.getElementById("nc"+a[2]))nrd(+a[2])}}}
+if(!t.closest(".sdq,.sdr"))document.querySelectorAll(".sdq").forEach(function(q){var r=q.previousElementSibling;if(r)r.classList.remove("on");q.remove()});
+document.querySelectorAll("details.sux[open]").forEach(function(d){if(!d.contains(t))d.removeAttribute("open")})}
+document.addEventListener("click",function(e){fold(e.target)});
+window.addEventListener("message",function(e){if(e.data&&e.data.sp===0){sp(false);hidToc()}});window.addEventListener("blur",function(){sp(false);hidToc()});
 fapply();
 var svt=null;try{svt=localStorage.getItem("pali_theme")}catch(e){}
 setTh(svt||"dark");
