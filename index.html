@@ -3425,6 +3425,8 @@ function hl(el,v){clr();var w=d.createTreeWalker(el,NodeFilter.SHOW_TEXT),n,f=fa
 function go(k){if(!hits.length)return;hi=(k+hits.length)%hits.length;var el=hits[hi];var dt=el.closest('details');if(dt)dt.open=true;hl(el,q.value.trim());el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('flash');setTimeout(function(){el.classList.remove('flash')},1700);qc.textContent=(hi+1)+' / '+hits.length}
 function find(){var v=q.value.trim();clr();if(!v){hits=[];qc.textContent='';return}if(!txt)txt=blks.map(function(x){return x.textContent});hits=blks.filter(function(x,i){return txt[i].indexOf(v)>=0});qc.textContent=hits.length?'0 / '+hits.length:'හමු නොවීය';hi=-1}
 q.addEventListener('input',find);q.addEventListener('keydown',function(e){if(e.key=='Enter'){e.preventDefault();go(hi+1)}});qn.addEventListener('click',function(){if(!hits.length)find();go(hi+1)});
+
+d.addEventListener('click',function(e){var t=e.target;if(!t.closest||t.closest('details[open],button,input,a,.rail'))return;var any=false;qa.forEach(function(x){if(x.open){x.open=false;any=true}});if(any&&b){b.setAttribute('data-o','0');b.textContent='📖 සියලු පිළිතුරු විවෘත කරන්න'}});
 })();
 </script></body></html></template>
 <template id="vbt"><!doctype html><html lang="si"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
