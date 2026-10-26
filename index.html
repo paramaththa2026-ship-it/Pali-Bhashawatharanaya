@@ -4952,7 +4952,7 @@ if(d.sd.length>1)h+='<div class="sdt">'+d.sd.map(function(z,k){return '<button c
 h+='<div class="blk" style="margin:4px 0 0">'+srow([[x.r,"r"]],"ජිනවචනයුත්තඤ්හි");
 x.steps.forEach(function(s){h+=srow(s.t,s.n)});
 return h+'</div></div>'}
-function ncard(i){var p=TQ.t,x=TR[TQ.e],d=Wd(i),u=NSU[nk(i)]||{},k=key("tra",i),on=ld(key("trd",i))=="1",n=wm(i,ld(k)),ok=n>=tneed(i),hs=p?hints(i):[];
+function ncard(i){var p=TQ.t,x=TR[TQ.e],d=Wd(i),u=NSU[nk(i)]||{},k=key("tra",i),on=ld(key("trd",i))=="1",n=wm(i,ld(k)),ok=n>=tneed(i),hs=[];
 var h='<span class="tag">වාක්‍යය '+(i+1)+'</span><p class="q">'+(p?esc(x.s[i]):pw(x.p[i]))+'</p>'
 +(hs.length?'<details><summary>💡 ඉඟි වචන ('+hs.length+')</summary>'+hs.map(function(e){return '<div class="rev"><b>'+esc(e[0])+'</b> = '+esc(e[1])+'</div>'}).join('')+'</details>':'')
 +'<div id="wp'+i+'">'+tbox(i,n,wcnt(ld(k)))+'</div>'
