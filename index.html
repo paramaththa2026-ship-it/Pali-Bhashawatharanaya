@@ -5107,7 +5107,8 @@ document.addEventListener("keydown",function(e){if(e.key=="Escape")sp(false)});f
 function fold(t){var tc=document.getElementById("toc");if(tc&&!tc.hidden&&!t.closest("#toc")&&!t.closest('button[onclick="tt()"]'))tc.hidden=true;
 if(!t.closest(".sdp,.vsp,.nbt")){for(var k in NSU){var u=NSU[k];if(u&&(u.sd||u.vs)){var a=k.split(".");u.sd=0;u.vs=0;if(+a[0]==TQ.e&&+a[1]==TQ.t&&document.getElementById("nc"+a[2]))nrd(+a[2])}}}
 if(!t.closest(".sdq,.sdr"))document.querySelectorAll(".sdq").forEach(function(q){var r=q.previousElementSibling;if(r)r.classList.remove("on");q.remove()});
-document.querySelectorAll("details.sux[open]").forEach(function(d){if(!d.contains(t))d.removeAttribute("open")})}
+document.querySelectorAll("details.sux[open]").forEach(function(d){if(!d.contains(t))d.removeAttribute("open")});
+if(document.getElementById("dc")&&(TQ.m==2||TQ.m==3)&&!t.closest(".card,.seg,button,a,header,#sp,#toc,#ws,input,textarea,.top"))tabM(0)}
 document.addEventListener("click",function(e){fold(e.target)});
 window.addEventListener("message",function(e){if(e.data&&e.data.sp===0){sp(false);hidToc()}});window.addEventListener("blur",function(){sp(false);hidToc()});
 fapply();
