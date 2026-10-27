@@ -7822,10 +7822,10 @@ function pxFin(id){var p=PXR[id].px,v=pxg(id);return v.a>=0&&v.m>=0&&v.u.length>
 function pxO(o,c,sel,id,f){return '<div class="wc">'+o.map(function(t,k){var cl='wo';if(sel>=0){if(k===c)cl+=sel===c?' ok':' miss';else if(sel===k)cl+=' bad'}
 return '<button class="'+cl+'"'+(sel>=0?' disabled':' onclick="pxp(\''+id+'\',\''+f+'\','+k+')"')+'>'+esc(t)+'</button>'}).join('')+'</div>'}
 function pxCard(id){var d=PXR[id],p=d.px,v=pxg(id),n=p.mid.length,h='<p class="hl">1. මේ පද දෙක සන්ධි කළ විට සැකසෙන රූපය තෝරන්න</p>'+pxO(p.o,p.c,v.a,id,'a');
-if(v.a>=0)h+='<p class="hl">2. මෙහි ප්‍රධාන සන්ධි සූත්‍රය කුමක්ද?</p>'+pxO(p.so,p.sc,v.m,id,'m');
-if(v.m>=0&&n>0){h+='<p class="hl">3. සන්ධි පියවර නියම පිළිවෙලට තබන්න <small>(මුල “විසන්ධි” සහ අග “ජිනවචනයුත්තං හි” දැනටමත් ඇත)</small></p><div class="sxl"><span class="sxc ok">1. විසන්ධි</span>'
+if(v.a>=0&&n>0){h+='<p class="hl">2. සන්ධි පියවර නියම පිළිවෙලට තබන්න <small>(මුල “විසන්ධි” සහ අග “ජිනවචනයුත්තං හි” දැනටමත් ඇත)</small></p><div class="sxl"><span class="sxc ok">1. විසන්ධි</span>'
 +v.u.map(function(j,q){return '<span class="sxc ok">'+(q+2)+'. '+esc(p.mid[j])+'</span>'}).join('')+'</div>';
 if(v.u.length<n)h+='<div class="sxl">'+p.sh.filter(function(j){return v.u.indexOf(j)<0}).map(function(j){return '<button class="btn g sm" onclick="pxo(\''+id+'\','+j+')">'+esc(p.mid[j])+'</button>'}).join('')+'</div>'+(v.e?'<small class="sub">❌ වැරදි තේරීම් '+v.e+' – ඊළඟට එන පියවර තෝරන්න</small>':'')}
+if(v.a>=0&&v.u.length>=n)h+='<p class="hl">'+(n>0?'3':'2')+'. මෙහි ප්‍රධාන සන්ධි සූත්‍රය කුමක්ද?</p>'+pxO(p.so,p.sc,v.m,id,'m');
 if(pxFin(id))h+='<div class="okb"><b>✔ සියල්ල නිවැරදියි – සම්පූර්ණ සන්ධි සාධනය</b></div>'+sxDer(d)+'<p><button class="btn g sm" onclick="pxr(\''+id+'\')">↺ නැවත උත්සාහ කරන්න</button></p>';
 return h}
 function pxBox(id,d){PXR[id]=d;return '<div class="pxw" id="px_'+id+'"><p class="q"><b>'+esc(d.a)+' + '+esc(d.b)+'</b></p>'+pxCard(id)+'</div>'}
