@@ -7596,7 +7596,7 @@ function suBack(){var p=SUST.pop();if(p)sutraSheet(p,1)}
 document.addEventListener("click",function(e){var c=e.target.closest&&e.target.closest(".ch.su,[data-su].su-h");if(c){e.stopPropagation();if(c.closest("#wsc")){sutraSheet(c.getAttribute("data-su"))}else{SUST=[];SUCUR=null;SUTAB=0;sutraSheet(c.getAttribute("data-su"))}}},true);
 document.addEventListener("keydown",function(e){if((e.key=="Enter"||e.key==" ")&&e.target.classList&&e.target.classList.contains("su")&&e.target.hasAttribute("data-su")){e.preventDefault();e.target.click()}});
 function sdPanel(n,i,pm){var x=SDL[n][i],m=x.h.match(/^(.*?)\s*(\(.*)$/);
-return '<h4 class="sdh">'+esc(m?m[1]:x.h)+(m?' <small>'+esc(m[2])+'</small>':'')+'</h4>'+(x.px?'<div class="pxb"><button class="btn sm g" onclick="sdPx(this,'+n+','+i+')">'+(pm?'📖 සාධනය බලන්න':'🧩 පුහුණු වන්න')+'</button></div>':'')+(pm&&x.px?pxBox("l"+n+"_"+i,x):'<div class="blk" style="margin:4px 0 0">'+srow([[x.r,"r"]],"ජිනවචනයුත්තං හි")+x.steps.map(function(s){return srow(s.t,s.n)}).join('')+'</div>')}
+return '<h4 class="sdh">'+esc(m?m[1]:x.h)+(m?' <small>'+esc(m[2])+'</small>':'')+'</h4>'+(x.px?pxBox("l"+n+"_"+i,x):'<div class="blk" style="margin:4px 0 0">'+srow([[x.r,"r"]],"ජිනවචනයුත්තං හි")+x.steps.map(function(s){return srow(s.t,s.n)}).join('')+'</div>')}
 function sdPx(b,n,i){var q=b.closest(".sdq"),m=q.getAttribute("data-px")=="1"?0:1;q.setAttribute("data-px",m);PXT=1;q.innerHTML=sdPanel(n,i,m)}
 var SDLL=[0,0,0,1,1];
 function sdInit(L){var K=[];SDL.forEach(function(A,n){if(SDLL[n]!==L)return;A.forEach(function(x,i){K.push([nk(x.r),n,i])})});
@@ -7656,8 +7656,7 @@ function srow(t,n){return '<div class="st"><span class="ex">'+t.map(sgm).join(''
 function sdHtml(i){var d=Wd(i),u=NSU[nkey(i)]||{},t=u.t||0,x=d.sd[t];
 var h='<div class="sdp">';
 if(d.sd.length>1)h+='<div class="sdt">'+d.sd.map(function(z,k){return '<button class="'+(k==t?'on':'')+'" onclick="nst('+i+','+k+')">සන්ධි '+(k+1)+' · '+esc(z.a)+' + '+esc(z.b)+'</button>'}).join('')+'</div>';
-if(x.px)h+='<div class="pxb"><button class="btn sm g" onclick="npx('+i+')">'+(u.px?'📖 සාධනය බලන්න':'🧩 පුහුණු වන්න')+'</button></div>';
-if(u.px&&x.px)return h+pxBox("w"+TQ.t+"_"+i+"_"+t,x)+'</div>';
+if(x.px)return h+pxBox("w"+TQ.t+"_"+i+"_"+t,x)+'</div>';
 h+='<div class="blk" style="margin:4px 0 0">'+srow([[x.r,"r"]],"ජිනවචනයුත්තං හි");
 x.steps.forEach(function(s){h+=srow(s.t,s.n)});
 return h+'</div></div>'}
