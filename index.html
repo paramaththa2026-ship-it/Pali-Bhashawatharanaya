@@ -7656,8 +7656,7 @@ function srow(t,n){return '<div class="st"><span class="ex">'+t.map(sgm).join(''
 function sdHtml(i){var d=Wd(i),u=NSU[nkey(i)]||{},t=u.t||0,x=d.sd[t];
 var h='<div class="sdp">';
 if(d.sd.length>1)h+='<div class="sdt">'+d.sd.map(function(z,k){return '<button class="'+(k==t?'on':'')+'" onclick="nst('+i+','+k+')">සන්ධි '+(k+1)+' · '+esc(z.a)+' + '+esc(z.b)+'</button>'}).join('')+'</div>';
-if(x.px)h+='<div class="pxb"><button class="btn sm g" onclick="npx('+i+')">'+(u.px?'📖 සාධනය බලන්න':'🧩 පුහුණු වන්න')+'</button></div>';
-if(u.px&&x.px)return h+pxBox("w"+TQ.t+"_"+i+"_"+t,x)+'</div>';
+if(x.px)return h+pxBox("w"+TQ.t+"_"+i+"_"+t,x)+'</div>';
 h+='<div class="blk" style="margin:4px 0 0">'+srow([[x.r,"r"]],"ජිනවචනයුත්තං හි");
 x.steps.forEach(function(s){h+=srow(s.t,s.n)});
 return h+'</div></div>'}
