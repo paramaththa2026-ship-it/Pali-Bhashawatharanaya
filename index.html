@@ -7596,7 +7596,7 @@ function suBack(){var p=SUST.pop();if(p)sutraSheet(p,1)}
 document.addEventListener("click",function(e){var c=e.target.closest&&e.target.closest(".ch.su,[data-su].su-h");if(c){e.stopPropagation();if(c.closest("#wsc")){sutraSheet(c.getAttribute("data-su"))}else{SUST=[];SUCUR=null;SUTAB=0;sutraSheet(c.getAttribute("data-su"))}}},true);
 document.addEventListener("keydown",function(e){if((e.key=="Enter"||e.key==" ")&&e.target.classList&&e.target.classList.contains("su")&&e.target.hasAttribute("data-su")){e.preventDefault();e.target.click()}});
 function sdPanel(n,i,pm){var x=SDL[n][i],m=x.h.match(/^(.*?)\s*(\(.*)$/);
-return '<h4 class="sdh">'+esc(m?m[1]:x.h)+(m?' <small>'+esc(m[2])+'</small>':'')+'</h4>'+(x.px?'<div class="pxb"><button class="btn sm g" onclick="sdPx(this,'+n+','+i+')">'+(pm?'📖 සාධනය බලන්න':'🧩 පුහුණු වන්න')+'</button></div>':'')+(pm&&x.px?pxBox("l"+n+"_"+i,x):'<div class="blk" style="margin:4px 0 0">'+srow([[x.r,"r"]],"ජිනවචනයුත්තං හි")+x.steps.map(function(s){return srow(s.t,s.n)}).join('')+'</div>')}
+return '<h4 class="sdh">'+esc(m?m[1]:x.h)+(m?' <small>'+esc(m[2])+'</small>':'')+'</h4>'+(x.px?pxBox("l"+n+"_"+i,x):'<div class="blk" style="margin:4px 0 0">'+srow([[x.r,"r"]],"ජිනවචනයුත්තං හි")+x.steps.map(function(s){return srow(s.t,s.n)}).join('')+'</div>')}
 function sdPx(b,n,i){var q=b.closest(".sdq"),m=q.getAttribute("data-px")=="1"?0:1;q.setAttribute("data-px",m);PXT=1;q.innerHTML=sdPanel(n,i,m)}
 var SDLL=[0,0,0,1,1];
 function sdInit(L){var K=[];SDL.forEach(function(A,n){if(SDLL[n]!==L)return;A.forEach(function(x,i){K.push([nk(x.r),n,i])})});
@@ -7796,11 +7796,11 @@ return '<button class="'+cl+'"'+(sel>=0?' disabled':' onclick="sxp('+s+','+i+',\
 function sxDer(d){return '<div class="sdp"><div class="blk" style="margin:4px 0 0">'+srow([[d.r,"r"]],"ජිනවචනයුත්තං හි")+d.steps.map(function(z){return srow(z.t,z.n)}).join('')+'</div></div>'}
 function sxcard(s,i){var it=sxL(s)[i],v=sxg(s,i),n=it.mid.length,h='<span class="tag">'+(s?'සන්ධි කරන්න ':'බිඳ දක්වන්න ')+(i+1)+'</span><p class="q"><b>'+(s?esc(it.a)+' + '+esc(it.b):esc(it.r))+'</b></p>';
 h+='<p class="hl">1. '+(s?'මේ පද දෙක සන්ධි කළ විට සැකසෙන රූපය තෝරන්න':'මෙම පදය සන්ධි වී ඇත්තේ කවර පද දෙකකින්ද? තෝරන්න')+'</p>'+sxopts(it.o,it.c,v.a,s,i,'a');
-if(v.a>=0)h+='<p class="hl">2. මෙහි ප්‍රධාන සන්ධි සූත්‍රය කුමක්ද?</p>'+sxopts(it.so,it.sc,v.m,s,i,'m');
-if(v.m>=0&&n>0){h+='<p class="hl">3. සන්ධි පියවර නියම පිළිවෙලට තබන්න <small>(මුල “විසන්ධි” සහ අග “ජිනවචනයුත්තං හි” දැනටමත් ඇත)</small></p><div class="sxl"><span class="sxc ok">1. විසන්ධි</span>'
+if(v.a>=0&&n>0){h+='<p class="hl">2. සන්ධි පියවර නියම පිළිවෙලට තබන්න <small>(මුල “විසන්ධි” සහ අග “ජිනවචනයුත්තං හි” දැනටමත් ඇත)</small></p><div class="sxl"><span class="sxc ok">1. විසන්ධි</span>'
 +v.u.map(function(j,q){return '<span class="sxc ok">'+(q+2)+'. '+esc(it.mid[j])+'</span>'}).join('')+'</div>';
 if(v.u.length<n){h+='<div class="sxl">'+it.sh.filter(function(j){return v.u.indexOf(j)<0}).map(function(j){return '<button class="btn g sm" onclick="sxo('+s+','+i+','+j+')">'+esc(it.mid[j])+'</button>'}).join('')+'</div>'+(v.e?'<small class="sub">❌ වැරදි තේරීම් '+v.e+' – ඊළඟට එන පියවර තෝරන්න</small>':'')}}
-if(sxFin(s,i)){var op=SXU[s+"_"+i];h+='<div class="okb"><b>✔ සියල්ල නිවැරදියි</b></div><div class="sxd nbt"><button class="btn sm'+(op?' on':' g')+'" onclick="sxd('+s+','+i+')">🔗 සන්ධි සාධනය'+(op?' ▲':' ▼')+'</button><button class="btn g sm" onclick="sxr('+s+','+i+')">↺ නැවත උත්සාහ කරන්න</button></div>'+(op?'<div class="sxd">'+sxDer(it.d)+'</div>':'')}
+if(v.a>=0&&v.u.length>=n)h+='<p class="hl">'+(n>0?'3':'2')+'. මෙහි ප්‍රධාන සන්ධි සූත්‍රය කුමක්ද?</p>'+sxopts(it.so,it.sc,v.m,s,i,'m');
+if(sxFin(s,i)){h+='<div class="okb"><b>✔ සියල්ල නිවැරදියි – සම්පූර්ණ සන්ධි සාධනය</b></div><div class="sxd">'+sxDer(it.d)+'</div><div class="sxd nbt"><button class="btn g sm" onclick="sxr('+s+','+i+')">↺ නැවත උත්සාහ කරන්න</button></div>'}
 return h}
 function sxrd(s,i){var el=document.getElementById("sx"+s+"_"+i);if(el)el.innerHTML=sxcard(s,i);sxdc()}
 function sxp(s,i,f,k){var v=sxg(s,i);if(v[f]>=0)return;v[f]=k;sxs(s,i,v);sxrd(s,i)}
