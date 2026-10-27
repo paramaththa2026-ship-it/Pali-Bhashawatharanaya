@@ -7832,7 +7832,7 @@ function pxBox(id,d){PXR[id]=d;return '<div class="pxw" id="px_'+id+'"><p class=
 function pxRd(id){PXT=1;var el=document.getElementById("px_"+id);if(el)el.innerHTML='<p class="q"><b>'+esc(PXR[id].a)+' + '+esc(PXR[id].b)+'</b></p>'+pxCard(id)}
 function pxp(id,f,k){var v=pxg(id);if(v[f]>=0)return;v[f]=k;pxs(id,v);pxRd(id)}
 function pxo(id,j){var p=PXR[id].px,v=pxg(id);if(v.u.indexOf(j)>=0)return;if(p.mid[j]===p.mid[v.u.length])v.u.push(j);else v.e++;pxs(id,v);pxRd(id)}
-function pxr(id){sv(pxk(id),"0");pxRd(id)}
+function pxr(id){sv(pxk(id),"0");pxRd(id);var el=document.getElementById("px_"+id);if(el)window.scrollTo({top:el.getBoundingClientRect().top+window.pageYOffset-110,behavior:"smooth"})}
 function tr(){
 var p=TQ.t,m=TQ.m,x=TR[TQ.e],L=p?x.s:x.p,G=p?x.gs:x.gp;ttl("අභ්‍යාසය "+(TQ.e+1));
 var d=L.filter(function(_,i){return m==1?wget(i).f:ld(key("trd",i))=="1"}).length;
