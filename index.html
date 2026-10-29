@@ -7854,7 +7854,7 @@ var h='<span class="tag">වාක්‍යය '+(i+1)+' <small>(අභ්‍ය
 if(v.t.indexOf(k)>=0||v.x.indexOf(k)>=0||all)d=' disabled';return '<button class="'+cl+'"'+d+' onclick="mgt('+i+','+k+')">'+esc(w)+'</button>'}).join(' ')+'</p>';
 if(!all){h+='<p class="hl">1. මෙම වාක්‍යයේ ඇති මනොගණික පද තට්ටු කර තෝරන්න <small>('+v.t.length+' / '+it.k.length+')</small></p>'+(v.e?'<small class="sub">❌ වැරදි තේරීම් '+v.e+'</small>':'')}
 
-if(mgFin(i))h+='<div class="okb"><b>✔ නිවැරදියි</b><br><span class="sub">'+esc(it.f)+'</span></div><div class="nbt"><button class="btn g sm" onclick="mgr('+i+')">↺ නැවත උත්සාහ කරන්න</button></div>';
+if(mgFin(i))h+='<div class="okb"><b>✔ නිවැරදියි</b></div><div class="nbt"><button class="btn g sm" onclick="mgr('+i+')">↺ නැවත උත්සාහ කරන්න</button></div>';
 return h}
 function mgrd(i){var el=document.getElementById("mg"+i);if(el)el.innerHTML=mgcard(i);mgdc()}
 function mgt(i,k){var it=mgL()[i],v=mgg(i);if(v.t.indexOf(k)>=0||v.x.indexOf(k)>=0)return;if(it.k.indexOf(k)>=0)v.t.push(k);else{v.x.push(k);v.e++}mgs(i,v);mgrd(i)}
