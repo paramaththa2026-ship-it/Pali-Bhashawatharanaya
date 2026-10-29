@@ -7845,7 +7845,7 @@ function mgL(){return TR[TQ.e].mg[TQ.t?'s':'p']}
 function mgk(i){return "pali_mg_"+TQ.e+"_"+TQ.t+"_"+i}
 function mgg(i){try{var v=JSON.parse(ld(mgk(i)));if(v&&v.t)return v}catch(e){}return{t:[],x:[],a:{},e:0}}
 function mgs(i,v){sv(mgk(i),JSON.stringify(v))}
-function mgFin(i){var it=mgL()[i],v=mgg(i);return it.t.every(function(_,j){var a=v.a[j];return a&&a[1]>=0})}
+function mgFin(i){var it=mgL()[i],v=mgg(i);return it.k.every(function(k){return v.t.indexOf(k)>=0})}
 function mgdc(){var el=document.getElementById("dc");if(!el)return;var n=0,L=mgL();L.forEach(function(_,i){if(mgFin(i))n++});el.textContent="🙏 "+n+"/"+L.length}
 function mgOpts(o,c,sel,j,i,f){return '<div class="wc">'+o.map(function(t,k){var cl='wo';if(sel>=0){if(k===c)cl+=sel===c?' ok':' miss';else if(sel===k)cl+=' bad'}
 return '<button class="'+cl+'"'+(sel>=0?' disabled':' onclick="mgp('+i+','+j+','+f+','+k+')"')+'>'+esc(t)+'</button>'}).join('')+'</div>'}
@@ -7853,19 +7853,14 @@ function mgcard(i){var it=mgL()[i],v=mgg(i),all=it.k.every(function(k){return v.
 var h='<span class="tag">වාක්‍යය '+(i+1)+' <small>(අභ්‍යාසය '+it.n+')</small></span><p class="mgs">'+it.sw.map(function(w,k){var cl='wo mgw',d='';if(v.t.indexOf(k)>=0)cl+=' ok';else if(v.x.indexOf(k)>=0)cl+=' bad';
 if(v.t.indexOf(k)>=0||v.x.indexOf(k)>=0||all)d=' disabled';return '<button class="'+cl+'"'+d+' onclick="mgt('+i+','+k+')">'+esc(w)+'</button>'}).join(' ')+'</p>';
 if(!all){h+='<p class="hl">1. මෙම වාක්‍යයේ ඇති මනොගණික පද තට්ටු කර තෝරන්න <small>('+v.t.length+' / '+it.k.length+')</small></p>'+(v.e?'<small class="sub">❌ වැරදි තේරීම් '+v.e+'</small>':'')}
-else{h+='<p class="hl">2. එක් එක් මනොගණික පදයේ ශබ්ද මූලය හා තේරුම තෝරන්න</p>';
-var cur=-1;it.t.forEach(function(e,j){var a=v.a[j]||[-1,-1];
-if(a[1]>=0){h+='<div class="mgr ok"><b>'+esc(it.sw[e.w])+'</b> → '+esc(e.b)+' <small>('+esc(e.g)+')</small></div>'}
-else if(cur<0){cur=j;h+='<div class="mgr"><b>'+esc(it.sw[e.w])+'</b></div>'+'<p class="sub">ශබ්ද මූලය (ප්‍රාතිපදිකය):</p>'+mgOpts(e.o,e.c,a[0],j,i,0);
-if(a[0]>=0)h+='<p class="sub">තේරුම:</p>'+mgOpts(e.go,e.gc,a[1],j,i,1)}});
-}
+
 if(mgFin(i))h+='<div class="okb"><b>✔ නිවැරදියි</b><br><span class="sub">'+esc(it.f)+'</span></div><div class="nbt"><button class="btn g sm" onclick="mgr('+i+')">↺ නැවත උත්සාහ කරන්න</button></div>';
 return h}
 function mgrd(i){var el=document.getElementById("mg"+i);if(el)el.innerHTML=mgcard(i);mgdc()}
 function mgt(i,k){var it=mgL()[i],v=mgg(i);if(v.t.indexOf(k)>=0||v.x.indexOf(k)>=0)return;if(it.k.indexOf(k)>=0)v.t.push(k);else{v.x.push(k);v.e++}mgs(i,v);mgrd(i)}
 function mgp(i,j,f,k){var v=mgg(i),a=v.a[j]||[-1,-1];if(a[f]>=0)return;if(f==1&&a[0]<0)return;a[f]=k;v.a[j]=a;mgs(i,v);mgrd(i)}
 function mgr(i){sv(mgk(i),"0");mgrd(i)}
-function mghtml(){var L=mgL(),h='<p class="sub">මනොගණික ශබ්ද (මනස, වචස, අයස, තෙජස, පයස ආදී) වාක්‍යවලින් සොයා, ඒවායේ ශබ්ද මූලය හා තේරුම තෝරන්න.</p>';
+function mghtml(){var L=mgL(),h='<p class="sub">මනොගණික ශබ්ද (මනස, වචස, අයස, තෙජස, පයස ආදී) වාක්‍යවලින් සොයා, තට්ටු කර තෝරන්න.</p>';
 L.forEach(function(_,i){h+='<div class="card" id="mg'+i+'">'+mgcard(i)+'</div>'});return h+nextBtn()}
 function lesNav(){var hs=document.querySelectorAll(".les .lh,.les .sh");if(hs.length<4)return;var c=document.querySelector(".les");
 var d=document.createElement("details");d.className="jmp";d.innerHTML='<summary>📑 පාඩමේ කොටස් ('+hs.length+')</summary><div class="jl">'+Array.prototype.map.call(hs,function(h,k){h.id="lh"+k;return '<a onclick="document.getElementById(\'lh'+k+'\').scrollIntoView({behavior:\'smooth\',block:\'start\'});this.closest(\'details\').removeAttribute(\'open\')">'+esc(h.textContent.replace(/^[\s\d.]+/,'').slice(0,40))+'</a>'}).join('')+'</div>';
